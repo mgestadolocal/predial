@@ -8,7 +8,7 @@ ALIAS = {"sanpedroatacama":"sanpedrodeatacama","lacalera":"calera","llayllay":"l
  "puertonatales":"natales","sanjosemaipo":"sanjosedemaipo","paguirrecerda":"pedroaguirrecerda","santiagocentro":"santiago"}
 REG = {1:"Tarapacá",2:"Antofagasta",3:"Atacama",4:"Coquimbo",5:"Valparaíso",6:"O'Higgins",7:"Maule",8:"Biobío",
  9:"La Araucanía",10:"Los Lagos",11:"Aysén",12:"Magallanes",13:"Metropolitana",14:"Los Ríos",15:"Arica y Parinacota",16:"Ñuble"}
-ORDEN = [15,1,2,3,4,5,13,6,7,16,8,9,14,10,11,12]
+ORDEN = list(range(1, 17))  # orden numérico: I … XII, RM (13), XIV, XV, XVI
 ROMANO = {15:"XV",1:"I",2:"II",3:"III",4:"IV",5:"V",13:"RM",6:"VI",7:"VII",16:"XVI",8:"VIII",9:"IX",14:"XIV",10:"X",11:"XI",12:"XII"}
 sii = json.load(open("data_build/comunas_sii.json", encoding="utf-8"))
 g = gpd.read_file("data_build/bcn_comunas.gpkg").to_crs(4326)
