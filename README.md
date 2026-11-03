@@ -37,6 +37,15 @@ python tools/servidor_local.py
 # abrir http://localhost:8787/?api=http://localhost:8787
 ```
 
+## Importar KML / KMZ / GeoJSON
+
+En la consola, el paso 04 sirve para importar un archivo, con el botón o arrastrándolo al mapa. Se dibuja sobre el mapa y en el panel derecho aparece, para cada elemento, el tipo, la superficie o el largo y las comunas donde cae. **Buscar predios** consulta el SII:
+- **Punto:** el predio exacto en ese lugar.
+- **Polígono:** una grilla de hasta 60 puntos dentro.
+- **Línea:** puntos a lo largo, hasta 60.
+
+Junta los roles distintos y permite exportarlos a CSV. El archivo se procesa en el navegador y no se sube a ningún servidor. Como es un muestreo, en polígonos grandes puede omitir lotes muy chicos.
+
 ## Enlaces compartibles
 
 `#15160` abre Vitacura y `#15160/-33.387958/-70.580208` abre directamente la ficha del predio en ese punto.

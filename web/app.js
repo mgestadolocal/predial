@@ -121,7 +121,7 @@
     }
     return ok;
   }
-  function comunasEnPunto(lat, lon) {
+  function comunasEnPunto(lat, lon, { estricto = false } = {}) {
     const pt = [lon, lat], res = [];
     if (contornos) contornos.eachLayer((capa) => {
       const g = capa.feature.geometry;
@@ -129,6 +129,7 @@
       const polis = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
       if (polis.some((p) => dentro(pt, p[0]) && !p.slice(1).some((h) => dentro(pt, h)))) res.push(capa.feature.properties.cod);
     });
+    if (estricto) return res.map((c) => estado.porCod.get(c)).filter(Boolean);
     // Santiago: el SII lo divide en Centro, Oeste y Sur sobre el mismo límite comunal
     if (res.includes(13101)) res.push(13134, 13135);
     // Respaldo: comunas cuya extensión contiene el punto (diferencias de límite BCN vs SII)
@@ -292,7 +293,7 @@
           if (!estado.comuna || estado.comuna.cod !== c.cod) elegirComuna(c, { volar: false });
           pintarFicha(r.predio, c, lat, lon);
           escribirHash(lat, lon);
-          return;
+          return r.predio;
         }
       }
       fichaVacia("Sin predio aquí", "El SII no tiene un predio registrado en este punto. Puede ser un bien nacional de uso público, como una calle, un río o una plaza. Prueba tocando dentro de un lote.");
@@ -471,4 +472,7 @@
     .catch(() => pintarEstado(`<span class="mal">●</span> No se pudo cargar el catálogo de comunas`));
 
   addEventListener("resize", () => mapa.invalidateSize());
+
+  // Funciones compartidas con capa.js (importación de KML/KMZ)
+  window.Predial = { mapa, estado, llamar, consultar, comunasEnPunto, abrirFicha, cerrarFicha, pintarEstado, paddingVista, esc, clp, num, titulo, $ };
 })();

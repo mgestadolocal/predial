@@ -315,3 +315,66 @@ body.con-ficha .aviso { left: calc(50% + (var(--consola) - 400px) / 2); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ── Capa importada (KML/KMZ) ─────────────────────────── */
+.importar {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 12px;
+  background: transparent; border: 1px dashed var(--linea-fuerte); cursor: pointer; text-align: left;
+  transition: border-color .15s, background .15s;
+}
+.importar:hover { border-color: var(--senal); background: rgba(255, 91, 31, .06); }
+.importar svg { width: 22px; height: 22px; flex: none; fill: none; stroke: var(--senal); stroke-width: 1.8; }
+.importar span { font: 500 14px var(--mono); }
+.importar small { display: block; font: 11px var(--mono); color: var(--papel-3); }
+.capa-info { display: flex; align-items: center; gap: 10px; margin-top: 6px; padding: 7px 10px; border: 1px solid var(--senal); font: 12px var(--mono); }
+.capa-nombre { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--senal); }
+.enlace {
+  padding: 0; background: none; border: 0; cursor: pointer; color: var(--papel-2);
+  font: 500 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px;
+}
+.enlace:hover:not(:disabled) { color: var(--fosforo); }
+.enlace:disabled { opacity: .4; cursor: default; }
+.volver-analisis { display: block; margin-bottom: 12px; color: var(--senal); }
+
+.zona-soltar {
+  position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center;
+  background: rgba(10, 12, 11, .72); backdrop-filter: blur(3px); pointer-events: none;
+}
+.zona-soltar[hidden] { display: none; }
+.zona-soltar div {
+  display: grid; gap: 6px; justify-items: center; padding: 48px 64px;
+  border: 2px dashed var(--senal); background: var(--tinta);
+}
+.zona-soltar b { font: 400 44px/1 var(--serif); }
+.zona-soltar span { font: 12px var(--mono); letter-spacing: .14em; color: var(--senal); }
+
+.an-titulo { margin: 8px 0 4px; font: 400 34px/1.05 var(--serif); word-break: break-word; padding-right: 30px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
+.chip { padding: 3px 8px; border: 1px solid var(--fosforo); color: var(--fosforo); font: 500 11px var(--mono); letter-spacing: .04em; }
+.chip.apagado { border-color: var(--linea-fuerte); color: var(--papel-3); }
+.an-acciones { display: flex; gap: 6px; flex-wrap: wrap; padding: 16px 22px; border-bottom: 1px solid var(--linea); }
+.boton:disabled { opacity: .45; cursor: progress; }
+
+.elementos { list-style: none; margin: 0; padding: 0; }
+.elemento { padding: 16px 22px; border-bottom: 1px solid var(--linea); }
+.el-cab { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: baseline; }
+.el-num { font: 500 11px var(--mono); color: var(--senal); }
+.el-nombre { font: 500 15px var(--sans); }
+.el-tipo { grid-column: 2; font: 11px var(--mono); color: var(--papel-3); text-transform: uppercase; letter-spacing: .06em; }
+.el-comunas { margin: 8px 0 0 28px; font: 12.5px var(--mono); color: var(--fosforo); }
+.el-acciones { display: flex; gap: 16px; margin: 10px 0 0 28px; }
+.el-nota { margin: 10px 0 0 28px; font: 11.5px var(--mono); color: var(--papel-2); }
+.el-nota.mal { color: var(--senal); }
+.progreso { height: 3px; margin: 12px 0 0 28px; background: var(--tinta-3); }
+.progreso i { display: block; height: 100%; background: var(--senal); transition: width .3s; }
+.res-lista { margin: 10px 0 0 28px; border-top: 1px solid var(--linea); max-height: 340px; overflow-y: auto; scrollbar-width: thin; }
+.res-predio {
+  display: grid; grid-template-columns: 76px 1fr auto; gap: 10px; align-items: center; width: 100%;
+  padding: 9px 0; background: none; border: 0; border-bottom: 1px dashed var(--linea); cursor: pointer; text-align: left;
+}
+.res-predio:hover { background: var(--fosforo-suave); }
+.rp-rol { font: 500 13px var(--mono); color: var(--fosforo); }
+.rp-dir { min-width: 0; font: 12.5px var(--sans); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rp-dir small { display: block; font: 11px var(--mono); color: var(--papel-3); text-transform: none; }
+.rp-val { font: 12px var(--mono); color: var(--papel-2); padding-right: 4px; }
+.an-pie { margin: 0; padding: 16px 22px 24px; font: 11px var(--mono); color: var(--papel-3); line-height: 1.5; }
