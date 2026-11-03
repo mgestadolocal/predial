@@ -1,0 +1,7 @@
+data_build/*
+!data_build/comunas_sii.json
+__pycache__/
+*.pyc
+.wrangler/
+node_modules/
+.dev.vars

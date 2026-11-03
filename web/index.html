@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Predial — Chile predio a predio</title>
+<meta name="description" content="Explora los predios del SII en un mapa de Chile: elige región y comuna, toca un predio y ve su rol, avalúo y destino.">
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0c0b'/%3E%3Cpath d='M6 26V6h12l8 8v12z' fill='none' stroke='%23c8ff3c' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='17' r='2.5' fill='%23ff5b1f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="inicio">
+
+<div id="mapa" aria-label="Mapa de predios"></div>
+<div class="barrido" aria-hidden="true"></div>
+<div class="reticula" aria-hidden="true"></div>
+
+<!-- Consola principal -->
+<aside class="consola" id="consola">
+  <header class="marca">
+    <span class="logo" aria-hidden="true">
+      <svg viewBox="0 0 32 32"><path d="M6 26V6h12l8 8v12z"/><circle cx="16" cy="17" r="2.5"/></svg>
+    </span>
+    <span class="nombre">PREDIAL</span>
+    <span class="version">CL / SII · en vivo</span>
+  </header>
+
+  <div class="intro">
+    <h1>Chile,<br><em>predio a predio.</em></h1>
+    <p>Elige una región y una comuna, acércate y toca cualquier lote para ver su rol, avalúo y destino según el Servicio de Impuestos Internos.</p>
+  </div>
+
+  <div class="paso">
+    <label class="rotulo" for="region"><span>01</span> Región</label>
+    <div class="regiones" id="regiones" role="listbox" aria-label="Regiones"></div>
+  </div>
+
+  <div class="paso">
+    <label class="rotulo" for="comuna"><span>02</span> Comuna</label>
+    <div class="buscador">
+      <input id="comuna" type="text" autocomplete="off" spellcheck="false" placeholder="Escribe o elige…" disabled>
+      <ul class="sugerencias" id="sugerencias" role="listbox" hidden></ul>
+    </div>
+  </div>
+
+  <div class="paso" id="pasoRol">
+    <label class="rotulo" for="rol"><span>03</span> Rol <i>opcional</i></label>
+    <form class="rol" id="formRol">
+      <input id="rol" type="text" inputmode="numeric" placeholder="manzana-predio  ej. 1235-5" disabled>
+      <button type="submit" disabled aria-label="Buscar rol">→</button>
+    </form>
+  </div>
+
+  <div class="estado" id="estado" aria-live="polite"></div>
+
+  <footer class="pie">
+    <span>Sitio independiente, sin relación con el SII ni la TGR.</span>
+  </footer>
+</aside>
+
+<!-- Ficha del predio -->
+<section class="ficha" id="ficha" aria-live="polite" hidden>
+  <button class="cerrar" id="cerrarFicha" aria-label="Cerrar ficha">×</button>
+  <div id="fichaCuerpo"></div>
+</section>
+
+<!-- Instrumentos -->
+<div class="instrumentos">
+  <div class="lectura" id="lectura">
+    <span><b>LAT</b> <output id="lat">—</output></span>
+    <span><b>LON</b> <output id="lon">—</output></span>
+    <span><b>Z</b> <output id="zoom">—</output></span>
+  </div>
+  <div class="capas" role="group" aria-label="Fondo del mapa">
+    <button data-fondo="noche" class="activo">Noche</button>
+    <button data-fondo="satelite">Satélite</button>
+    <button data-rotulos id="btnRotulos" title="Mostrar números de rol del SII">N° rol</button>
+  </div>
+</div>
+
+<div class="aviso" id="aviso" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

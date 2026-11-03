@@ -1,0 +1,2778 @@
+[
+ {
+  "cod": 1101,
+  "layer": "sii:BR_CART_ARICA_WMS",
+  "lat": -18.47977,
+  "lon": -70.31553,
+  "zoom": 13,
+  "region": 15
+ },
+ {
+  "cod": 1106,
+  "layer": "sii:BR_CART_CAMARONES_WMS",
+  "lat": -18.9316857279168,
+  "lon": -69.7002001364884,
+  "zoom": 11,
+  "region": 15
+ },
+ {
+  "cod": 1201,
+  "layer": "sii:BR_CART_IQUIQUE_WMS",
+  "lat": -20.2124,
+  "lon": -70.1447,
+  "zoom": 13,
+  "region": 1
+ },
+ {
+  "cod": 1203,
+  "layer": "sii:BR_CART_PICA_WMS",
+  "lat": -20.4780118267449,
+  "lon": -68.91167487216,
+  "zoom": 11,
+  "region": 1
+ },
+ {
+  "cod": 1204,
+  "layer": "sii:BR_CART_POZO_ALMONTE_WMS",
+  "lat": -20.7690041434356,
+  "lon": -69.5045669855351,
+  "zoom": 11,
+  "region": 1
+ },
+ {
+  "cod": 1206,
+  "layer": "sii:BR_CART_HUARA_WMS",
+  "lat": -19.5901110089509,
+  "lon": -69.6677176976356,
+  "zoom": 11,
+  "region": 1
+ },
+ {
+  "cod": 1208,
+  "layer": "sii:BR_CART_CAMINA_WMS",
+  "lat": -19.3734498514023,
+  "lon": -69.5053391154742,
+  "zoom": 11,
+  "region": 1
+ },
+ {
+  "cod": 1210,
+  "layer": "sii:BR_CART_COLCHANE_WMS",
+  "lat": -19.3531074594833,
+  "lon": -68.8472360615018,
+  "zoom": 11,
+  "region": 1
+ },
+ {
+  "cod": 1211,
+  "layer": "sii:BR_CART_ALTO_HOSPICIO_WMS",
+  "lat": -20.1911076435759,
+  "lon": -70.0118511221954,
+  "zoom": 11,
+  "region": 1
+ },
+ {
+  "cod": 1301,
+  "layer": "sii:BR_CART_PUTRE_WMS",
+  "lat": -18.4279953388799,
+  "lon": -69.3118085667558,
+  "zoom": 11,
+  "region": 15
+ },
+ {
+  "cod": 1302,
+  "layer": "sii:BR_CART_GENERAL_LAGOS_WMS",
+  "lat": -17.8290793575051,
+  "lon": -69.5688603758574,
+  "zoom": 11,
+  "region": 15
+ },
+ {
+  "cod": 2101,
+  "layer": "sii:BR_CART_TOCOPILLA_WMS",
+  "lat": -22.0023044478509,
+  "lon": -70.0141257446861,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 2103,
+  "layer": "sii:BR_CART_MARIA_ELENA_WMS",
+  "lat": -22.0895064071849,
+  "lon": -69.4603579490668,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 2201,
+  "layer": "sii:BR_CART_ANTOFAGASTA_WMS",
+  "lat": -23.65347,
+  "lon": -70.40074,
+  "zoom": 13,
+  "region": 2
+ },
+ {
+  "cod": 2202,
+  "layer": "sii:BR_CART_TALTAL_WMS",
+  "lat": -25.3133048247785,
+  "lon": -69.8652065928929,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 2203,
+  "layer": "sii:BR_CART_MEJILLONES_WMS",
+  "lat": -22.9360504525633,
+  "lon": -70.1983673513506,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 2206,
+  "layer": "sii:BR_CART_SIERRA_GORDA_WMS",
+  "lat": -23.2557365648327,
+  "lon": -69.3073551488475,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 2301,
+  "layer": "sii:BR_CART_CALAMA_WMS",
+  "lat": -22.4661,
+  "lon": -68.9145,
+  "zoom": 13,
+  "region": 2
+ },
+ {
+  "cod": 2302,
+  "layer": "sii:BR_CART_OLLAGUE_WMS",
+  "lat": -21.4564766410772,
+  "lon": -68.3140619265275,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 2303,
+  "layer": "sii:BR_CART_SAN_PEDRO_ATACAMA_WMS",
+  "lat": -23.4019700914911,
+  "lon": -67.9111492472922,
+  "zoom": 11,
+  "region": 2
+ },
+ {
+  "cod": 3101,
+  "layer": "sii:BR_CART_CHANARAL_WMS",
+  "lat": -26.3725755151948,
+  "lon": -70.3379132041853,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 3102,
+  "layer": "sii:BR_CART_DIEGO_DE_ALMAGRO_WMS",
+  "lat": -26.2367783516992,
+  "lon": -69.1860604215949,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 3201,
+  "layer": "sii:BR_CART_COPIAPO_WMS",
+  "lat": -27.3204723278149,
+  "lon": -69.8251212322296,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 3202,
+  "layer": "sii:BR_CART_CALDERA_WMS",
+  "lat": -27.1697,
+  "lon": -70.83088,
+  "zoom": 12,
+  "region": 3
+ },
+ {
+  "cod": 3203,
+  "layer": "sii:BR_CART_TIERRA_AMARILLA_WMS",
+  "lat": -27.8639619871995,
+  "lon": -69.6710375460363,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 3301,
+  "layer": "sii:BR_CART_VALLENAR_WMS",
+  "lat": -28.5936365380411,
+  "lon": -70.6013949138574,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 3302,
+  "layer": "sii:BR_CART_FREIRINA_WMS",
+  "lat": -28.5364,
+  "lon": -71.0351,
+  "zoom": 12,
+  "region": 3
+ },
+ {
+  "cod": 3303,
+  "layer": "sii:BR_CART_HUASCO_WMS",
+  "lat": -28.2576218978742,
+  "lon": -71.0172223288561,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 3304,
+  "layer": "sii:BR_CART_ALTO_DEL_CARMEN_WMS",
+  "lat": -28.9929471181421,
+  "lon": -70.1530177054052,
+  "zoom": 11,
+  "region": 3
+ },
+ {
+  "cod": 4101,
+  "layer": "sii:BR_CART_LA_SERENA_WMS",
+  "lat": -29.7890087591375,
+  "lon": -71.0607369418103,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4102,
+  "layer": "sii:BR_CART_LA_HIGUERA_WMS",
+  "lat": -29.3748369332872,
+  "lon": -70.9014733405131,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4103,
+  "layer": "sii:BR_CART_COQUIMBO_WMS",
+  "lat": -30.2272432780365,
+  "lon": -71.3588855551259,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4104,
+  "layer": "sii:BR_CART_ANDACOLLO_WMS",
+  "lat": -30.2594312440159,
+  "lon": -71.1006377498474,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4105,
+  "layer": "sii:BR_CART_VICUNA_WMS",
+  "lat": -29.8916096818238,
+  "lon": -70.3823835764192,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4106,
+  "layer": "sii:BR_CART_PAIHUANO_WMS",
+  "lat": -30.2370829776537,
+  "lon": -70.3702989352629,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4201,
+  "layer": "sii:BR_CART_OVALLE_WMS",
+  "lat": -30.6730213051863,
+  "lon": -71.4053019177171,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4203,
+  "layer": "sii:BR_CART_MONTE_PATRIA_WMS",
+  "lat": -30.8344407974909,
+  "lon": -70.650401044723,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4204,
+  "layer": "sii:BR_CART_PUNITAQUI_WMS",
+  "lat": -30.946173338998,
+  "lon": -71.3326101351253,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4205,
+  "layer": "sii:BR_CART_COMBARBALA_WMS",
+  "lat": -31.1464545747619,
+  "lon": -70.9657356480313,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4206,
+  "layer": "sii:BR_CART_RIO_HURTADO_WMS",
+  "lat": -30.4305350847909,
+  "lon": -70.6541748784094,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4301,
+  "layer": "sii:BR_CART_ILLAPEL_WMS",
+  "lat": -31.5493658175224,
+  "lon": -70.9700984445635,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4302,
+  "layer": "sii:BR_CART_SALAMANCA_WMS",
+  "lat": -31.8931637035143,
+  "lon": -70.6613688221062,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4303,
+  "layer": "sii:BR_CART_LOS_VILOS_WMS",
+  "lat": -31.9779542435694,
+  "lon": -71.3042466598675,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 4304,
+  "layer": "sii:BR_CART_CANELA_WMS",
+  "lat": -31.4018389155589,
+  "lon": -71.3943841969111,
+  "zoom": 11,
+  "region": 4
+ },
+ {
+  "cod": 5101,
+  "layer": "sii:BR_CART_ISLA_DE_PASCUA_WMS",
+  "lat": -27.1192,
+  "lon": -109.3648,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5201,
+  "layer": "sii:BR_CART_LA_LIGUA_WMS",
+  "lat": -32.3534892575637,
+  "lon": -71.2716403386871,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5202,
+  "layer": "sii:BR_CART_PETORCA_WMS",
+  "lat": -32.1905086554248,
+  "lon": -70.869906029023,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5203,
+  "layer": "sii:BR_CART_CABILDO_WMS",
+  "lat": -32.4173581634555,
+  "lon": -70.8235363045634,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5204,
+  "layer": "sii:BR_CART_ZAPALLAR_WMS",
+  "lat": -32.5873435156894,
+  "lon": -71.3361856942042,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5205,
+  "layer": "sii:BR_CART_PAPUDO_WMS",
+  "lat": -32.4744974376376,
+  "lon": -71.3802785008735,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5301,
+  "layer": "sii:BR_CART_VALPARAISO_WMS",
+  "lat": -33.1296434298621,
+  "lon": -71.5733509700483,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5302,
+  "layer": "sii:BR_CART_VINA_DEL_MAR_WMS",
+  "lat": -33.0277360521207,
+  "lon": -71.5151776741614,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5303,
+  "layer": "sii:BR_CART_VILLA_ALEMANA_WMS",
+  "lat": -33.0672918956448,
+  "lon": -71.3301677519268,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5304,
+  "layer": "sii:BR_CART_QUILPUE_WMS",
+  "lat": -33.1472226936134,
+  "lon": -71.2543691212214,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5305,
+  "layer": "sii:BR_CART_CASABLANCA_WMS",
+  "lat": -33.3156500735259,
+  "lon": -71.4349599246832,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5306,
+  "layer": "sii:BR_CART_QUINTERO_WMS",
+  "lat": -32.8423074510958,
+  "lon": -71.4730292727908,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5307,
+  "layer": "sii:BR_CART_PUCHUNCAVI_WMS",
+  "lat": -32.7452661652782,
+  "lon": -71.3874489357692,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5308,
+  "layer": "sii:BR_CART_JUAN_FERNANDEZ_WMS",
+  "lat": -33.63771,
+  "lon": -78.83149,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5309,
+  "layer": "sii:BR_CART_CON_CON_WMS",
+  "lat": -32.9520600638059,
+  "lon": -71.467304329445,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5401,
+  "layer": "sii:BR_CART_SAN_ANTONIO_WMS",
+  "lat": -33.6670032134638,
+  "lon": -71.4869010676774,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5402,
+  "layer": "sii:BR_CART_SANTO_DOMINGO_WMS",
+  "lat": -33.8093217848441,
+  "lon": -71.6764626440288,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5403,
+  "layer": "sii:BR_CART_CARTAGENA_WMS",
+  "lat": -33.5336810732465,
+  "lon": -71.4421608490473,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5404,
+  "layer": "sii:BR_CART_EL_TABO_WMS",
+  "lat": -33.4828632290474,
+  "lon": -71.5810805364546,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5405,
+  "layer": "sii:BR_CART_EL_QUISCO_WMS",
+  "lat": -33.4153474202475,
+  "lon": -71.6507319004546,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5406,
+  "layer": "sii:BR_CART_ALGARROBO_WMS",
+  "lat": -33.3293697116486,
+  "lon": -71.5993662242341,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5501,
+  "layer": "sii:BR_CART_QUILLOTA_WMS",
+  "lat": -32.9041219520609,
+  "lon": -71.2718968990746,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5502,
+  "layer": "sii:BR_CART_NOGALES_WMS",
+  "lat": -32.6914588006956,
+  "lon": -71.1761032881589,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5503,
+  "layer": "sii:BR_CART_HIJUELAS_WMS",
+  "lat": -32.869312544796,
+  "lon": -71.0810611191945,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5504,
+  "layer": "sii:BR_CART_LA_CALERA_WMS",
+  "lat": -32.793913386987,
+  "lon": -71.1568902439233,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5505,
+  "layer": "sii:BR_CART_LA_CRUZ_WMS",
+  "lat": -32.8249610456812,
+  "lon": -71.240024744508,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5506,
+  "layer": "sii:BR_CART_LIMACHE_WMS",
+  "lat": -33.0309615366898,
+  "lon": -71.2785693388087,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5507,
+  "layer": "sii:BR_CART_OLMUE_WMS",
+  "lat": -33.035633898002,
+  "lon": -71.1105189601973,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5601,
+  "layer": "sii:BR_CART_SAN_FELIPE_WMS",
+  "lat": -32.7362686663546,
+  "lon": -70.752701305367,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5602,
+  "layer": "sii:BR_CART_PANQUEHUE_WMS",
+  "lat": -32.7936579212706,
+  "lon": -70.8283874859611,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5603,
+  "layer": "sii:BR_CART_CATEMU_WMS",
+  "lat": -32.7073305224481,
+  "lon": -70.9446422533127,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5604,
+  "layer": "sii:BR_CART_PUTAENDO_WMS",
+  "lat": -32.4809719348259,
+  "lon": -70.5209100583965,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5605,
+  "layer": "sii:BR_CART_SANTA_MARIA_WMS",
+  "lat": -32.6858588571619,
+  "lon": -70.6096045666015,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5606,
+  "layer": "sii:BR_CART_LLAY_LLAY_WMS",
+  "lat": -32.8881216407031,
+  "lon": -70.9016591990451,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5701,
+  "layer": "sii:BR_CART_LOS_ANDES_WMS",
+  "lat": -32.9511260730765,
+  "lon": -70.2397590565189,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5702,
+  "layer": "sii:BR_CART_CALLE_LARGA_WMS",
+  "lat": -32.950707636532,
+  "lon": -70.5447194037177,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5703,
+  "layer": "sii:BR_CART_SAN_ESTEBAN_WMS",
+  "lat": -32.6865100351748,
+  "lon": -70.3481681495361,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 5704,
+  "layer": "sii:BR_CART_RINCONADA_WMS",
+  "lat": -32.8762648449027,
+  "lon": -70.7061629934951,
+  "zoom": 11,
+  "region": 5
+ },
+ {
+  "cod": 6101,
+  "layer": "sii:BR_CART_RANCAGUA_WMS",
+  "lat": -34.1258166508668,
+  "lon": -70.8166404933504,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6102,
+  "layer": "sii:BR_CART_MACHALI_WMS",
+  "lat": -34.3204294750887,
+  "lon": -70.3192099209458,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6103,
+  "layer": "sii:BR_CART_GRANEROS_WMS",
+  "lat": -34.0656116482294,
+  "lon": -70.7470569192683,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6104,
+  "layer": "sii:BR_CART_SAN_FCO_MOSTAZAL_WMS",
+  "lat": -33.9557638542708,
+  "lon": -70.5688625863542,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6105,
+  "layer": "sii:BR_CART_DONIHUE_WMS",
+  "lat": -34.196635615721,
+  "lon": -70.9233825539206,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6106,
+  "layer": "sii:BR_CART_COLTAUCO_WMS",
+  "lat": -34.2596505597099,
+  "lon": -71.0774719631709,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6107,
+  "layer": "sii:BR_CART_CODEGUA_WMS",
+  "lat": -34.0571250200586,
+  "lon": -70.5469770777028,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6108,
+  "layer": "sii:BR_CART_PEUMO_WMS",
+  "lat": -34.3290416556635,
+  "lon": -71.2219564939241,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6109,
+  "layer": "sii:BR_CART_LAS_CABRAS_WMS",
+  "lat": -34.1646475831785,
+  "lon": -71.332784121083,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6110,
+  "layer": "sii:BR_CART_SAN_VICENTE_WMS",
+  "lat": -34.4774770391526,
+  "lon": -71.1231183661479,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6111,
+  "layer": "sii:BR_CART_PICHIDEGUA_WMS",
+  "lat": -34.371192053306,
+  "lon": -71.3390872175801,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6112,
+  "layer": "sii:BR_CART_RENGO_WMS",
+  "lat": -34.454627024227,
+  "lon": -70.7189624029136,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6113,
+  "layer": "sii:BR_CART_REQUINOA_WMS",
+  "lat": -34.335330359774,
+  "lon": -70.6583584040846,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6114,
+  "layer": "sii:BR_CART_OLIVAR_WMS",
+  "lat": -34.2127456696052,
+  "lon": -70.8211809485774,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6115,
+  "layer": "sii:BR_CART_MALLOA_WMS",
+  "lat": -34.4764968442819,
+  "lon": -70.8729171745714,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6116,
+  "layer": "sii:BR_CART_COINCO_WMS",
+  "lat": -34.282286613187,
+  "lon": -70.9711124948082,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6117,
+  "layer": "sii:BR_CART_QUINTA_TILCOCO_WMS",
+  "lat": -34.3592220739699,
+  "lon": -70.9980672827516,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6201,
+  "layer": "sii:BR_CART_SAN_FERNANDO_WMS",
+  "lat": -34.7435425051169,
+  "lon": -70.6033466771073,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6202,
+  "layer": "sii:BR_CART_CHIMBARONGO_WMS",
+  "lat": -34.7516738494629,
+  "lon": -70.9808472233325,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6203,
+  "layer": "sii:BR_CART_NANCAGUA_WMS",
+  "lat": -34.6674640074313,
+  "lon": -71.1919395607956,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6204,
+  "layer": "sii:BR_CART_PLACILLA_WMS",
+  "lat": -34.619001246148,
+  "lon": -71.0863094306025,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6205,
+  "layer": "sii:BR_CART_SANTA_CRUZ_WMS",
+  "lat": -34.6429328290463,
+  "lon": -71.4016974141521,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6206,
+  "layer": "sii:BR_CART_LOLOL_WMS",
+  "lat": -34.7682533162628,
+  "lon": -71.6488298374192,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6207,
+  "layer": "sii:BR_CART_PALMILLA_WMS",
+  "lat": -34.5279239143459,
+  "lon": -71.3529084481131,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6208,
+  "layer": "sii:BR_CART_PERALILLO_WMS",
+  "lat": -34.4660185240991,
+  "lon": -71.4966804728192,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6209,
+  "layer": "sii:BR_CART_CHEPICA_WMS",
+  "lat": -34.7921122805916,
+  "lon": -71.359861625063,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6214,
+  "layer": "sii:BR_CART_PUMANQUE_WMS",
+  "lat": -34.5958698378092,
+  "lon": -71.6917721702003,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6301,
+  "layer": "sii:BR_CART_PICHILEMU_WMS",
+  "lat": -34.383885036137,
+  "lon": -71.9106913031651,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6302,
+  "layer": "sii:BR_CART_NAVIDAD_WMS",
+  "lat": -34.0145,
+  "lon": -71.8278,
+  "zoom": 12,
+  "region": 6
+ },
+ {
+  "cod": 6303,
+  "layer": "sii:BR_CART_LITUECHE_WMS",
+  "lat": -34.1070294269957,
+  "lon": -71.7332608726063,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6304,
+  "layer": "sii:BR_CART_LA_ESTRELLA_WMS",
+  "lat": -34.2231126317428,
+  "lon": -71.6025513759668,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6305,
+  "layer": "sii:BR_CART_MARCHIGUE_WMS",
+  "lat": -34.3725789647591,
+  "lon": -71.6717648660862,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 6306,
+  "layer": "sii:BR_CART_PAREDONES_WMS",
+  "lat": -34.6733656172152,
+  "lon": -71.91150230448,
+  "zoom": 11,
+  "region": 6
+ },
+ {
+  "cod": 7101,
+  "layer": "sii:BR_CART_CURICO_WMS",
+  "lat": -35.0733,
+  "lon": -71.168,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7102,
+  "layer": "sii:BR_CART_TENO_WMS",
+  "lat": -34.8881365417621,
+  "lon": -71.0218541067688,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7103,
+  "layer": "sii:BR_CART_ROMERAL_WMS",
+  "lat": -35.0685319973652,
+  "lon": -70.7112934468346,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7104,
+  "layer": "sii:BR_CART_RAUCO_WMS",
+  "lat": -34.9377343058681,
+  "lon": -71.4257908756584,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7105,
+  "layer": "sii:BR_CART_LICANTEN_WMS",
+  "lat": -34.9742256824157,
+  "lon": -72.0603901083742,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7106,
+  "layer": "sii:BR_CART_VICHUQUEN_WMS",
+  "lat": -34.8411444820153,
+  "lon": -72.0224654591429,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7107,
+  "layer": "sii:BR_CART_HUALANE_WMS",
+  "lat": -34.9526417136756,
+  "lon": -71.7088259606405,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7108,
+  "layer": "sii:BR_CART_MOLINA_WMS",
+  "lat": -35.3528094410048,
+  "lon": -70.9107833262185,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7109,
+  "layer": "sii:BR_CART_SAGRADA_FAMILIA_WMS",
+  "lat": -35.1035878560766,
+  "lon": -71.4957216903733,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7201,
+  "layer": "sii:BR_CART_TALCA_WMS",
+  "lat": -35.4276698306556,
+  "lon": -71.6025281942131,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7202,
+  "layer": "sii:BR_CART_SAN_CLEMENTE_WMS",
+  "lat": -35.7119164712107,
+  "lon": -70.8492861115818,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7203,
+  "layer": "sii:BR_CART_PELARCO_WMS",
+  "lat": -35.3830708921593,
+  "lon": -71.350133273825,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7204,
+  "layer": "sii:BR_CART_RIO_CLARO_WMS",
+  "lat": -35.2606233769806,
+  "lon": -71.2688621106896,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7205,
+  "layer": "sii:BR_CART_PENCAHUE_WMS",
+  "lat": -35.3274903262819,
+  "lon": -71.8162521759759,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7206,
+  "layer": "sii:BR_CART_MAULE_WMS",
+  "lat": -35.5082295138594,
+  "lon": -71.7120299911702,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7207,
+  "layer": "sii:BR_CART_CUREPTO_WMS",
+  "lat": -35.1297693261217,
+  "lon": -71.9530312398073,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7208,
+  "layer": "sii:BR_CART_CONSTITUCION_WMS",
+  "lat": -35.3630360351188,
+  "lon": -72.275799012492,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7209,
+  "layer": "sii:BR_CART_EMPEDRADO_WMS",
+  "lat": -35.6135200114881,
+  "lon": -72.2843866877408,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7210,
+  "layer": "sii:BR_CART_SAN_RAFAEL_WMS",
+  "lat": -35.3015228964998,
+  "lon": -71.5004925750652,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7301,
+  "layer": "sii:BR_CART_LINARES_WMS",
+  "lat": -35.958058809759,
+  "lon": -71.3334599257563,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7302,
+  "layer": "sii:BR_CART_YERBAS_BUENAS_WMS",
+  "lat": -35.6892005250611,
+  "lon": -71.544113085191,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7303,
+  "layer": "sii:BR_CART_COLBUN_WMS",
+  "lat": -36.0767852766844,
+  "lon": -70.9793983036759,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7304,
+  "layer": "sii:BR_CART_LONGAVI_WMS",
+  "lat": -36.1110920090304,
+  "lon": -71.4413733117151,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7305,
+  "layer": "sii:BR_CART_PARRAL_WMS",
+  "lat": -36.2621423616203,
+  "lon": -71.6466288796966,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7306,
+  "layer": "sii:BR_CART_RETIRO_WMS",
+  "lat": -36.0022006415876,
+  "lon": -71.8299458071009,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7309,
+  "layer": "sii:BR_CART_VILLA_ALEGRE_WMS",
+  "lat": -35.6857433353108,
+  "lon": -71.6830906087358,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7310,
+  "layer": "sii:BR_CART_SAN_JAVIER_WMS",
+  "lat": -35.6287714875624,
+  "lon": -71.9271434176862,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7401,
+  "layer": "sii:BR_CART_CAUQUENES_WMS",
+  "lat": -35.9712356487318,
+  "lon": -72.2804927038377,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7402,
+  "layer": "sii:BR_CART_PELLUHUE_WMS",
+  "lat": -35.9116472363615,
+  "lon": -72.6074409739141,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 7403,
+  "layer": "sii:BR_CART_CHANCO_WMS",
+  "lat": -35.6989406815746,
+  "lon": -72.4850223264724,
+  "zoom": 11,
+  "region": 7
+ },
+ {
+  "cod": 8101,
+  "layer": "sii:BR_CART_CHILLAN_WMS",
+  "lat": -36.6174781839754,
+  "lon": -72.1282242497,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8102,
+  "layer": "sii:BR_CART_PINTO_WMS",
+  "lat": -36.9212753765966,
+  "lon": -71.5005046402342,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8103,
+  "layer": "sii:BR_CART_COIHUECO_WMS",
+  "lat": -36.7019339507064,
+  "lon": -71.5816962226097,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8104,
+  "layer": "sii:BR_CART_QUIRIHUE_WMS",
+  "lat": -36.2355993364535,
+  "lon": -72.5436475772819,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8105,
+  "layer": "sii:BR_CART_NINHUE_WMS",
+  "lat": -36.3567574955365,
+  "lon": -72.4097067621336,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8106,
+  "layer": "sii:BR_CART_PORTEZUELO_WMS",
+  "lat": -36.5464135595822,
+  "lon": -72.4665316125704,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8107,
+  "layer": "sii:BR_CART_COBQUECURA_WMS",
+  "lat": -36.1808797866976,
+  "lon": -72.7205933673103,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8108,
+  "layer": "sii:BR_CART_TREHUACO_WMS",
+  "lat": -36.428007026419,
+  "lon": -72.6597876869715,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8109,
+  "layer": "sii:BR_CART_SAN_CARLOS_WMS",
+  "lat": -36.3857399578177,
+  "lon": -72.0190548343819,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8110,
+  "layer": "sii:BR_CART_NIQUEN_WMS",
+  "lat": -36.3022964980585,
+  "lon": -71.8979040681976,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8111,
+  "layer": "sii:BR_CART_SAN_FABIAN_WMS",
+  "lat": -36.5796824453612,
+  "lon": -71.2876373118946,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8112,
+  "layer": "sii:BR_CART_SAN_NICOLAS_WMS",
+  "lat": -36.4796974014286,
+  "lon": -72.2284531570978,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8113,
+  "layer": "sii:BR_CART_BULNES_WMS",
+  "lat": -36.7903956867506,
+  "lon": -72.2899923212706,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8114,
+  "layer": "sii:BR_CART_SAN_IGNACIO_WMS",
+  "lat": -36.8224358018525,
+  "lon": -72.029406132624,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8115,
+  "layer": "sii:BR_CART_QUILLON_WMS",
+  "lat": -36.8180331654201,
+  "lon": -72.5017339085561,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8116,
+  "layer": "sii:BR_CART_YUNGAY_WMS",
+  "lat": -37.1034141585445,
+  "lon": -71.9203816590082,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8117,
+  "layer": "sii:BR_CART_PEMUCO_WMS",
+  "lat": -36.9830622822813,
+  "lon": -72.0678056658395,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8118,
+  "layer": "sii:BR_CART_EL_CARMEN_WMS",
+  "lat": -36.925111265755,
+  "lon": -71.8471105560352,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8119,
+  "layer": "sii:BR_CART_RANQUIL_WMS",
+  "lat": -36.6404630898405,
+  "lon": -72.5879597605849,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8120,
+  "layer": "sii:BR_CART_COELEMU_WMS",
+  "lat": -36.5049812013623,
+  "lon": -72.7504237924813,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8121,
+  "layer": "sii:BR_CART_CHILLAN_VIEJO_WMS",
+  "lat": -36.680258994935,
+  "lon": -72.1988275165328,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8201,
+  "layer": "sii:BR_CART_CONCEPCION_WMS",
+  "lat": -36.834247284903,
+  "lon": -72.9512101258228,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8202,
+  "layer": "sii:BR_CART_PENCO_WMS",
+  "lat": -36.7476927700541,
+  "lon": -72.9435830181876,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8203,
+  "layer": "sii:BR_CART_HUALQUI_WMS",
+  "lat": -37.0447455309491,
+  "lon": -72.8710657445851,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8204,
+  "layer": "sii:BR_CART_FLORIDA_WMS",
+  "lat": -36.8223075795934,
+  "lon": -72.7177801627122,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8205,
+  "layer": "sii:BR_CART_TOME_WMS",
+  "lat": -36.616632387422,
+  "lon": -72.8580501079351,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8206,
+  "layer": "sii:BR_CART_TALCAHUANO_WMS",
+  "lat": -36.7169541639378,
+  "lon": -73.0991453784083,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8207,
+  "layer": "sii:BR_CART_CORONEL_WMS",
+  "lat": -37.0072133652767,
+  "lon": -73.1255841683151,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8208,
+  "layer": "sii:BR_CART_LOTA_WMS",
+  "lat": -37.1195814601755,
+  "lon": -73.1049584935787,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8209,
+  "layer": "sii:BR_CART_SANTA_JUANA_WMS",
+  "lat": -37.2766842387522,
+  "lon": -72.9600558121822,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8210,
+  "layer": "sii:BR_CART_SAN_PEDRO_LA_PAZ_WMS",
+  "lat": -36.8809156711141,
+  "lon": -73.0981557596885,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8211,
+  "layer": "sii:BR_CART_CHIGUAYANTE_WMS",
+  "lat": -36.9010960193996,
+  "lon": -73.0047921771671,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8212,
+  "layer": "sii:BR_CART_HUALPEN_WMS",
+  "lat": -36.7888140703429,
+  "lon": -73.1413681731985,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8301,
+  "layer": "sii:BR_CART_ARAUCO_WMS",
+  "lat": -37.2885901717578,
+  "lon": -73.3998060033379,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8302,
+  "layer": "sii:BR_CART_CURANILAHUE_WMS",
+  "lat": -37.4828989163803,
+  "lon": -73.2356455789041,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8303,
+  "layer": "sii:BR_CART_LEBU_WMS",
+  "lat": -37.6767746927862,
+  "lon": -73.5898712971486,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8304,
+  "layer": "sii:BR_CART_LOS_ALAMOS_WMS",
+  "lat": -37.6735822057187,
+  "lon": -73.3569413483969,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8305,
+  "layer": "sii:BR_CART_CANETE_WMS",
+  "lat": -37.8736668839216,
+  "lon": -73.3173011929546,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8306,
+  "layer": "sii:BR_CART_CONTULMO_WMS",
+  "lat": -38.0524592142217,
+  "lon": -73.2119647746482,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8307,
+  "layer": "sii:BR_CART_TIRUA_WMS",
+  "lat": -38.2972005951817,
+  "lon": -73.39440527529,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8401,
+  "layer": "sii:BR_CART_LOS_ANGELES_WMS",
+  "lat": -37.4074139485622,
+  "lon": -72.3274462522207,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8402,
+  "layer": "sii:BR_CART_SANTA_BARBARA_WMS",
+  "lat": -37.6232104004163,
+  "lon": -71.7482059473636,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8403,
+  "layer": "sii:BR_CART_LAJA_WMS",
+  "lat": -37.3126091450384,
+  "lon": -72.582532791573,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8404,
+  "layer": "sii:BR_CART_QUILLECO_WMS",
+  "lat": -37.4367035932531,
+  "lon": -71.8615463623028,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8405,
+  "layer": "sii:BR_CART_NACIMIENTO_WMS",
+  "lat": -37.4854861428467,
+  "lon": -72.8235471602787,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8406,
+  "layer": "sii:BR_CART_NEGRETE_WMS",
+  "lat": -37.6080516638165,
+  "lon": -72.5762946591151,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8407,
+  "layer": "sii:BR_CART_MULCHEN_WMS",
+  "lat": -37.8381741162124,
+  "lon": -72.0977801095627,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8408,
+  "layer": "sii:BR_CART_QUILACO_WMS",
+  "lat": -37.9608717018528,
+  "lon": -71.7049636529036,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8409,
+  "layer": "sii:BR_CART_YUMBEL_WMS",
+  "lat": -37.0902862790487,
+  "lon": -72.6175447004203,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8410,
+  "layer": "sii:BR_CART_CABRERO_WMS",
+  "lat": -37.0628447748826,
+  "lon": -72.3794362870291,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8411,
+  "layer": "sii:BR_CART_SAN_ROSENDO_WMS",
+  "lat": -37.2132269536877,
+  "lon": -72.7212581435773,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8412,
+  "layer": "sii:BR_CART_TUCAPEL_WMS",
+  "lat": -37.2254433899868,
+  "lon": -71.7443487996642,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8413,
+  "layer": "sii:BR_CART_ANTUCO_WMS",
+  "lat": -37.3274486701301,
+  "lon": -71.3670523312426,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 8414,
+  "layer": "sii:BR_CART_ALTO_BIOBIO_WMS",
+  "lat": -37.8653966367,
+  "lon": -71.3474428676774,
+  "zoom": 11,
+  "region": 8
+ },
+ {
+  "cod": 9101,
+  "layer": "sii:BR_CART_ANGOL_WMS",
+  "lat": -37.7682171588825,
+  "lon": -72.7961678256445,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9102,
+  "layer": "sii:BR_CART_PUREN_WMS",
+  "lat": -38.0121823399055,
+  "lon": -73.0503905702913,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9103,
+  "layer": "sii:BR_CART_LOS_SAUCES_WMS",
+  "lat": -37.9824762449926,
+  "lon": -72.7964882198042,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9104,
+  "layer": "sii:BR_CART_RENAICO_WMS",
+  "lat": -37.7177886055453,
+  "lon": -72.5755115383111,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9105,
+  "layer": "sii:BR_CART_COLLIPULLI_WMS",
+  "lat": -38.0264096115936,
+  "lon": -72.1248345617671,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9106,
+  "layer": "sii:BR_CART_ERCILLA_WMS",
+  "lat": -38.0828394468865,
+  "lon": -72.3531434512235,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9107,
+  "layer": "sii:BR_CART_TRAIGUEN_WMS",
+  "lat": -38.2469231895399,
+  "lon": -72.6549907097035,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9108,
+  "layer": "sii:BR_CART_LUMACO_WMS",
+  "lat": -38.2871440650575,
+  "lon": -73.0457033016305,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9109,
+  "layer": "sii:BR_CART_VICTORIA_WMS",
+  "lat": -38.2806139063162,
+  "lon": -72.2335956849679,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9110,
+  "layer": "sii:BR_CART_CURACAUTIN_WMS",
+  "lat": -38.4271557261102,
+  "lon": -71.7720700510364,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9111,
+  "layer": "sii:BR_CART_LONQUIMAY_WMS",
+  "lat": -38.4741377359744,
+  "lon": -71.239149782257,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9201,
+  "layer": "sii:BR_CART_TEMUCO_WMS",
+  "lat": -38.6731289669058,
+  "lon": -72.6678070356667,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9202,
+  "layer": "sii:BR_CART_VILCUN_WMS",
+  "lat": -38.704718267644,
+  "lon": -72.1165445081017,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9203,
+  "layer": "sii:BR_CART_FREIRE_WMS",
+  "lat": -38.955059662125,
+  "lon": -72.5885369066928,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9204,
+  "layer": "sii:BR_CART_CUNCO_WMS",
+  "lat": -38.9772562888749,
+  "lon": -71.9922362895043,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9205,
+  "layer": "sii:BR_CART_LAUTARO_WMS",
+  "lat": -38.5433556614453,
+  "lon": -72.2891005845065,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9206,
+  "layer": "sii:BR_CART_PERQUENCO_WMS",
+  "lat": -38.4282774003612,
+  "lon": -72.4366359828126,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9207,
+  "layer": "sii:BR_CART_GALVARINO_WMS",
+  "lat": -38.448226946116,
+  "lon": -72.7917320284962,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9208,
+  "layer": "sii:BR_CART_NUEVA_IMPERIAL_WMS",
+  "lat": -38.7514700324775,
+  "lon": -72.9718919989939,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9209,
+  "layer": "sii:BR_CART_CARAHUE_WMS",
+  "lat": -38.6112039365664,
+  "lon": -73.2695567731236,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9210,
+  "layer": "sii:BR_CART_SAAVEDRA_WMS",
+  "lat": -38.8325550123553,
+  "lon": -73.2955355232759,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9211,
+  "layer": "sii:BR_CART_PITRUFQUEN_WMS",
+  "lat": -39.0840626883967,
+  "lon": -72.6638090660082,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9212,
+  "layer": "sii:BR_CART_GORBEA_WMS",
+  "lat": -39.171950808984,
+  "lon": -72.6696187157292,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9213,
+  "layer": "sii:BR_CART_TOLTEN_WMS",
+  "lat": -39.2169623894846,
+  "lon": -73.0657754005603,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9214,
+  "layer": "sii:BR_CART_LONCOCHE_WMS",
+  "lat": -39.356287080738,
+  "lon": -72.582948147167,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9215,
+  "layer": "sii:BR_CART_VILLARRICA_WMS",
+  "lat": -39.3008478822255,
+  "lon": -72.1828162165058,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9216,
+  "layer": "sii:BR_CART_PUCON_WMS",
+  "lat": -39.270171751406,
+  "lon": -71.7912118710654,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9217,
+  "layer": "sii:BR_CART_MELIPEUCO_WMS",
+  "lat": -38.8246453457902,
+  "lon": -71.6108871642648,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9218,
+  "layer": "sii:BR_CART_CURARREHUE_WMS",
+  "lat": -39.3365320570122,
+  "lon": -71.5395500007159,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9219,
+  "layer": "sii:BR_CART_TEODORO_SCHMIDT_WMS",
+  "lat": -39.0054864892435,
+  "lon": -73.127486735199,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9220,
+  "layer": "sii:BR_CART_PADRE_LAS_CASAS_WMS",
+  "lat": -38.8022827660306,
+  "lon": -72.5555558502475,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 9221,
+  "layer": "sii:BR_CART_CHOLCHOL_WMS",
+  "lat": -38.5831583038117,
+  "lon": -72.9025692526118,
+  "zoom": 11,
+  "region": 9
+ },
+ {
+  "cod": 10101,
+  "layer": "sii:BR_CART_VALDIVIA_WMS",
+  "lat": -39.8196204774304,
+  "lon": -73.1706681022918,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10102,
+  "layer": "sii:BR_CART_MARIQUINA_WMS",
+  "lat": -39.510313135846,
+  "lon": -73.0166154768988,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10103,
+  "layer": "sii:BR_CART_LANCO_WMS",
+  "lat": -39.5121811803562,
+  "lon": -72.6215188407955,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10104,
+  "layer": "sii:BR_CART_LOS_LAGOS_WMS",
+  "lat": -39.8786062637286,
+  "lon": -72.5555350218754,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10105,
+  "layer": "sii:BR_CART_FUTRONO_WMS",
+  "lat": -40.1186550472947,
+  "lon": -72.1157347010315,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10106,
+  "layer": "sii:BR_CART_CORRAL_WMS",
+  "lat": -39.9890504048034,
+  "lon": -73.3721547468763,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10107,
+  "layer": "sii:BR_CART_MAFIL_WMS",
+  "lat": -39.6920621758053,
+  "lon": -72.8634649129216,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10108,
+  "layer": "sii:BR_CART_PANGUIPULLI_WMS",
+  "lat": -39.7141677671492,
+  "lon": -72.0307418075336,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10109,
+  "layer": "sii:BR_CART_LA_UNION_WMS",
+  "lat": -40.2013718608352,
+  "lon": -73.2305668459233,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10110,
+  "layer": "sii:BR_CART_PAILLACO_WMS",
+  "lat": -40.0743588083056,
+  "lon": -72.8433391150919,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10111,
+  "layer": "sii:BR_CART_RIO_BUENO_WMS",
+  "lat": -40.4961559714781,
+  "lon": -72.5352398079209,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10112,
+  "layer": "sii:BR_CART_LAGO_RANCO_WMS",
+  "lat": -40.3707748124703,
+  "lon": -72.1712505840571,
+  "zoom": 11,
+  "region": 14
+ },
+ {
+  "cod": 10201,
+  "layer": "sii:BR_CART_OSORNO_WMS",
+  "lat": -40.6118715733505,
+  "lon": -73.086735524725,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10202,
+  "layer": "sii:BR_CART_SAN_PABLO_WMS",
+  "lat": -40.4273250987166,
+  "lon": -73.1616793374912,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10203,
+  "layer": "sii:BR_CART_PUERTO_OCTAY_WMS",
+  "lat": -40.9334514970097,
+  "lon": -72.5996861550923,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10204,
+  "layer": "sii:BR_CART_PUYEHUE_WMS",
+  "lat": -40.7257319813422,
+  "lon": -72.3832342134327,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10205,
+  "layer": "sii:BR_CART_RIO_NEGRO_WMS",
+  "lat": -40.7711401613447,
+  "lon": -73.417698148136,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10206,
+  "layer": "sii:BR_CART_PURRANQUE_WMS",
+  "lat": -40.935738188129,
+  "lon": -73.4579159467074,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10207,
+  "layer": "sii:BR_CART_SAN_JUAN_LA_COSTA_WMS",
+  "lat": -40.5089975213087,
+  "lon": -73.5591903280225,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10301,
+  "layer": "sii:BR_CART_PUERTO_MONTT_WMS",
+  "lat": -41.4859488091705,
+  "lon": -72.7907260192124,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10302,
+  "layer": "sii:BR_CART_COCHAMO_WMS",
+  "lat": -41.755360517482,
+  "lon": -72.1051380576271,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10303,
+  "layer": "sii:BR_CART_PUERTO_VARAS_WMS",
+  "lat": -41.1912849365578,
+  "lon": -72.3865391815553,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10304,
+  "layer": "sii:BR_CART_FRESIA_WMS",
+  "lat": -41.1545476880537,
+  "lon": -73.6067200038034,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10305,
+  "layer": "sii:BR_CART_FRUTILLAR_WMS",
+  "lat": -41.0873943563095,
+  "lon": -73.0959170311243,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10306,
+  "layer": "sii:BR_CART_LLANQUIHUE_WMS",
+  "lat": -41.237828037796,
+  "lon": -73.139682287373,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10307,
+  "layer": "sii:BR_CART_MAULLIN_WMS",
+  "lat": -41.6324064915139,
+  "lon": -73.508529514893,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10308,
+  "layer": "sii:BR_CART_LOS_MUERMOS_WMS",
+  "lat": -41.3979440721439,
+  "lon": -73.5823664740741,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10309,
+  "layer": "sii:BR_CART_CALBUCO_WMS",
+  "lat": -41.7202931461795,
+  "lon": -73.1907985913274,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10401,
+  "layer": "sii:BR_CART_CASTRO_WMS",
+  "lat": -42.4737884854178,
+  "lon": -73.8046387216382,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10402,
+  "layer": "sii:BR_CART_CHONCHI_WMS",
+  "lat": -42.6817938454943,
+  "lon": -73.9306313405258,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10403,
+  "layer": "sii:BR_CART_QUEILEN_WMS",
+  "lat": -42.8556970469145,
+  "lon": -73.5644674892332,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10404,
+  "layer": "sii:BR_CART_QUELLON_WMS",
+  "lat": -43.1510471017346,
+  "lon": -73.9939296626445,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10405,
+  "layer": "sii:BR_CART_PUQUELDON_WMS",
+  "lat": -42.6265580378203,
+  "lon": -73.6370717220957,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10406,
+  "layer": "sii:BR_CART_ANCUD_WMS",
+  "lat": -42.0173195446605,
+  "lon": -73.8019156179995,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10407,
+  "layer": "sii:BR_CART_QUEMCHI_WMS",
+  "lat": -42.1789504273996,
+  "lon": -73.4114986372716,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10408,
+  "layer": "sii:BR_CART_DALCAHUE_WMS",
+  "lat": -42.3088066828418,
+  "lon": -73.8332505791692,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10410,
+  "layer": "sii:BR_CART_CURACO_DE_VELEZ_WMS",
+  "lat": -42.4265401791686,
+  "lon": -73.5786872547229,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10415,
+  "layer": "sii:BR_CART_QUINCHAO_WMS",
+  "lat": -42.5215851049741,
+  "lon": -73.3589227834804,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10501,
+  "layer": "sii:BR_CART_CHAITEN_WMS",
+  "lat": -43.0930666443922,
+  "lon": -72.5753510160021,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10502,
+  "layer": "sii:BR_CART_HUALAIHUE_WMS",
+  "lat": -42.1765810532675,
+  "lon": -72.3772418390736,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10503,
+  "layer": "sii:BR_CART_FUTALEUFU_WMS",
+  "lat": -43.1803588966641,
+  "lon": -72.007367345456,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 10504,
+  "layer": "sii:BR_CART_PALENA_WMS",
+  "lat": -43.6828895687478,
+  "lon": -71.9846537210022,
+  "zoom": 11,
+  "region": 10
+ },
+ {
+  "cod": 11101,
+  "layer": "sii:BR_CART_AYSEN_WMS",
+  "lat": -45.40646,
+  "lon": -72.69615,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11102,
+  "layer": "sii:BR_CART_CISNES_WMS",
+  "lat": -43.9741,
+  "lon": -72.405,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11104,
+  "layer": "sii:BR_CART_GUAITECAS_WMS",
+  "lat": -43.8971,
+  "lon": -73.7458,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11201,
+  "layer": "sii:BR_CART_CHILE_CHICO_WMS",
+  "lat": -46.53899,
+  "lon": -71.72759,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11203,
+  "layer": "sii:BR_CART_RIO_IBANEZ_WMS",
+  "lat": -46.29333,
+  "lon": -71.93774,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11301,
+  "layer": "sii:BR_CART_COCHRANE_WMS",
+  "lat": -47.2543,
+  "lon": -72.5738,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11302,
+  "layer": "sii:BR_CART_OHIGGINS_WMS",
+  "lat": -48.4682,
+  "lon": -72.5607,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11303,
+  "layer": "sii:BR_CART_TORTEL_WMS",
+  "lat": -47.801297,
+  "lon": -73.535942,
+  "zoom": 15,
+  "region": 11
+ },
+ {
+  "cod": 11401,
+  "layer": "sii:BR_CART_COYHAIQUE_WMS",
+  "lat": -45.5763,
+  "lon": -72.0653,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 11402,
+  "layer": "sii:BR_CART_LAGO_VERDE_WMS",
+  "lat": -44.2405,
+  "lon": -71.8487,
+  "zoom": 13,
+  "region": 11
+ },
+ {
+  "cod": 12101,
+  "layer": "sii:BR_CART_PUERTO_NATALES_WMS",
+  "lat": -51.7249,
+  "lon": -72.4884,
+  "zoom": 13,
+  "region": 12
+ },
+ {
+  "cod": 12103,
+  "layer": "sii:BR_CART_TORRES_DEL_PAINE_WMS",
+  "lat": -51.25518,
+  "lon": -72.35471,
+  "zoom": 14,
+  "region": 12
+ },
+ {
+  "cod": 12202,
+  "layer": "sii:BR_CART_RIO_VERDE_WMS",
+  "lat": -52.650759,
+  "lon": -71.463414,
+  "zoom": 14,
+  "region": 12
+ },
+ {
+  "cod": 12204,
+  "layer": "sii:BR_CART_SAN_GREGORIO_WMS",
+  "lat": -52.31348,
+  "lon": -69.69105,
+  "zoom": 14,
+  "region": 12
+ },
+ {
+  "cod": 12205,
+  "layer": "sii:BR_CART_PUNTA_ARENAS_WMS",
+  "lat": -53.16246,
+  "lon": -70.90814,
+  "zoom": 13,
+  "region": 12
+ },
+ {
+  "cod": 12206,
+  "layer": "sii:BR_CART_LAGUNA_BLANCA_WMS",
+  "lat": -52.427,
+  "lon": -71.414,
+  "zoom": 14,
+  "region": 12
+ },
+ {
+  "cod": 12301,
+  "layer": "sii:BR_CART_PORVENIR_WMS",
+  "lat": -53.29573,
+  "lon": -70.36901,
+  "zoom": 14,
+  "region": 12
+ },
+ {
+  "cod": 12302,
+  "layer": "sii:BR_CART_PRIMAVERA_WMS",
+  "lat": -52.77438,
+  "lon": -69.29073,
+  "zoom": 12,
+  "region": 12
+ },
+ {
+  "cod": 12304,
+  "layer": "sii:BR_CART_TIMAUKEL_WMS",
+  "lat": -53.640097,
+  "lon": -69.6463,
+  "zoom": 15,
+  "region": 12
+ },
+ {
+  "cod": 12401,
+  "layer": "sii:BR_CART_CABO_DE_HORNOS_WMS",
+  "lat": -54.93456,
+  "lon": -67.60567,
+  "zoom": 13,
+  "region": 12
+ },
+ {
+  "cod": 13101,
+  "layer": "sii:BR_CART_SANTIAGO_CENTRO_WMS",
+  "lat": -33.4433457049726,
+  "lon": -70.6506931839936,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 13134,
+  "layer": "sii:BR_CART_SANTIAGO_OESTE_WMS",
+  "lat": -33.4497281102254,
+  "lon": -70.6732387811343,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 13135,
+  "layer": "sii:BR_CART_SANTIAGO_SUR_WMS",
+  "lat": -33.4649209440329,
+  "lon": -70.6460099737851,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 13159,
+  "layer": "sii:BR_CART_RECOLETA_WMS",
+  "lat": -33.4053400166071,
+  "lon": -70.6396091384269,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 13167,
+  "layer": "sii:BR_CART_INDEPENDENCIA_WMS",
+  "lat": -33.4142517137801,
+  "lon": -70.6648995727851,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 14107,
+  "layer": "sii:BR_CART_QUINTA_NORMAL_WMS",
+  "lat": -33.4274367428121,
+  "lon": -70.7009991185895,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14109,
+  "layer": "sii:BR_CART_MAIPU_WMS",
+  "lat": -33.5068802428683,
+  "lon": -70.8096308131956,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14111,
+  "layer": "sii:BR_CART_PUDAHUEL_WMS",
+  "lat": -33.423971977798,
+  "lon": -70.8547391569519,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14113,
+  "layer": "sii:BR_CART_RENCA_WMS",
+  "lat": -33.4016582994395,
+  "lon": -70.7277148063564,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14114,
+  "layer": "sii:BR_CART_QUILICURA_WMS",
+  "lat": -33.3555361471131,
+  "lon": -70.7352830952964,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14127,
+  "layer": "sii:BR_CART_CONCHALI_WMS",
+  "lat": -33.3835110156927,
+  "lon": -70.6765947321773,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 14155,
+  "layer": "sii:BR_CART_LO_PRADO_WMS",
+  "lat": -33.44685022908,
+  "lon": -70.7229457380498,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 14156,
+  "layer": "sii:BR_CART_CERRO_NAVIA_WMS",
+  "lat": -33.4221850177701,
+  "lon": -70.7443102069985,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 14157,
+  "layer": "sii:BR_CART_ESTACION_CENTRAL_WMS",
+  "lat": -33.4641249325244,
+  "lon": -70.7006635311214,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14158,
+  "layer": "sii:BR_CART_HUECHURABA_WMS",
+  "lat": -33.3602300248057,
+  "lon": -70.638099804671,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 14166,
+  "layer": "sii:BR_CART_CERRILLOS_WMS",
+  "lat": -33.4995537664979,
+  "lon": -70.7123416731195,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 14201,
+  "layer": "sii:BR_CART_COLINA_WMS",
+  "lat": -33.1348686578337,
+  "lon": -70.6170840952369,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14202,
+  "layer": "sii:BR_CART_LAMPA_WMS",
+  "lat": -33.2780626784578,
+  "lon": -70.875225849589,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14203,
+  "layer": "sii:BR_CART_TIL_TIL_WMS",
+  "lat": -33.0619993428835,
+  "lon": -70.8774164154281,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14501,
+  "layer": "sii:BR_CART_TALAGANTE_WMS",
+  "lat": -33.681999726811,
+  "lon": -70.8954502329369,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14502,
+  "layer": "sii:BR_CART_ISLA_DE_MAIPO_WMS",
+  "lat": -33.7487205073621,
+  "lon": -70.945895066211,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14503,
+  "layer": "sii:BR_CART_EL_MONTE_WMS",
+  "lat": -33.6678791262228,
+  "lon": -71.0335418254322,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 14504,
+  "layer": "sii:BR_CART_PENAFLOR_WMS",
+  "lat": -33.61103932192,
+  "lon": -70.893702374848,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14505,
+  "layer": "sii:BR_CART_PADRE_HURTADO_WMS",
+  "lat": -33.557525527028,
+  "lon": -70.8709018933363,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14601,
+  "layer": "sii:BR_CART_MELIPILLA_WMS",
+  "lat": -33.7437525376954,
+  "lon": -71.1936904788384,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14602,
+  "layer": "sii:BR_CART_MARIA_PINTO_WMS",
+  "lat": -33.4980828596908,
+  "lon": -71.2103981912169,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14603,
+  "layer": "sii:BR_CART_CURACAVI_WMS",
+  "lat": -33.366486047309,
+  "lon": -71.0801317564016,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14604,
+  "layer": "sii:BR_CART_SAN_PEDRO_WMS",
+  "lat": -33.931778760443,
+  "lon": -71.4526715243281,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 14605,
+  "layer": "sii:BR_CART_ALHUE_WMS",
+  "lat": -34.0427222418668,
+  "lon": -71.0564436617691,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 15103,
+  "layer": "sii:BR_CART_PROVIDENCIA_WMS",
+  "lat": -33.4313108393285,
+  "lon": -70.612208242329,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 15105,
+  "layer": "sii:BR_CART_NUNOA_WMS",
+  "lat": -33.4578354425556,
+  "lon": -70.5987635895101,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 15108,
+  "layer": "sii:BR_CART_LAS_CONDES_WMS",
+  "lat": -33.4095,
+  "lon": -70.5374,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 15128,
+  "layer": "sii:BR_CART_LA_FLORIDA_WMS",
+  "lat": -33.5282767862666,
+  "lon": -70.539713723705,
+  "zoom": 12,
+  "region": 13
+ },
+ {
+  "cod": 15132,
+  "layer": "sii:BR_CART_LA_REINA_WMS",
+  "lat": -33.4470520231469,
+  "lon": -70.536852748247,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 15151,
+  "layer": "sii:BR_CART_MACUL_WMS",
+  "lat": -33.4893709147205,
+  "lon": -70.5999326411597,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 15152,
+  "layer": "sii:BR_CART_PENALOLEN_WMS",
+  "lat": -33.485293090766,
+  "lon": -70.5252836167951,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 15160,
+  "layer": "sii:BR_CART_VITACURA_WMS",
+  "lat": -33.3794157177263,
+  "lon": -70.5730072017432,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 15161,
+  "layer": "sii:BR_CART_LO_BARNECHEA_WMS",
+  "lat": -33.2992647736135,
+  "lon": -70.3685705912583,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16106,
+  "layer": "sii:BR_CART_SAN_MIGUEL_WMS",
+  "lat": -33.4990299939362,
+  "lon": -70.6514986159783,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16110,
+  "layer": "sii:BR_CART_LA_CISTERNA_WMS",
+  "lat": -33.5300838722909,
+  "lon": -70.663830995388,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16131,
+  "layer": "sii:BR_CART_LA_GRANJA_WMS",
+  "lat": -33.5354720582807,
+  "lon": -70.6224674334379,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16153,
+  "layer": "sii:BR_CART_SAN_RAMON_WMS",
+  "lat": -33.540531083195,
+  "lon": -70.6423256130912,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16154,
+  "layer": "sii:BR_CART_LA_PINTANA_WMS",
+  "lat": -33.5875592064014,
+  "lon": -70.6372311804861,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16162,
+  "layer": "sii:BR_CART_P_AGUIRRE_CERDA_WMS",
+  "lat": -33.4915540838009,
+  "lon": -70.675435195725,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16163,
+  "layer": "sii:BR_CART_SAN_JOAQUIN_WMS",
+  "lat": -33.4960191371948,
+  "lon": -70.6284323048966,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16164,
+  "layer": "sii:BR_CART_LO_ESPEJO_WMS",
+  "lat": -33.5204359847302,
+  "lon": -70.6897487629986,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16165,
+  "layer": "sii:BR_CART_EL_BOSQUE_WMS",
+  "lat": -33.5627230600671,
+  "lon": -70.6761831370231,
+  "zoom": 14,
+  "region": 13
+ },
+ {
+  "cod": 16301,
+  "layer": "sii:BR_CART_PUENTE_ALTO_WMS",
+  "lat": -33.5907693431105,
+  "lon": -70.5577828187388,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16302,
+  "layer": "sii:BR_CART_PIRQUE_WMS",
+  "lat": -33.7184026696684,
+  "lon": -70.5069352487355,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16303,
+  "layer": "sii:BR_CART_SAN_JOSE_MAIPO_WMS",
+  "lat": -33.7038403759417,
+  "lon": -70.0967971702895,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16401,
+  "layer": "sii:BR_CART_SAN_BERNARDO_WMS",
+  "lat": -33.6290303647713,
+  "lon": -70.724056378872,
+  "zoom": 11,
+  "region": 13
+ },
+ {
+  "cod": 16402,
+  "layer": "sii:BR_CART_CALERA_DE_TANGO_WMS",
+  "lat": -33.6231843498295,
+  "lon": -70.7900852829868,
+  "zoom": 13,
+  "region": 13
+ },
+ {
+  "cod": 16403,
+  "layer": "sii:BR_CART_BUIN_WMS",
+  "lat": -33.7478662550489,
+  "lon": -70.7388393936294,
+  "zoom": 12,
+  "region": 13
+ },
+ {
+  "cod": 16404,
+  "layer": "sii:BR_CART_PAINE_WMS",
+  "lat": -33.863699544811,
+  "lon": -70.7583439862674,
+  "zoom": 11,
+  "region": 13
+ }
+]
