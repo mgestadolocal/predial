@@ -48,21 +48,38 @@
   </div>
 
   <div class="paso" id="pasoRol">
-    <label class="rotulo" for="rol"><span>03</span> Rol <i>opcional</i></label>
+    <label class="rotulo" for="rol"><span>03</span> Rol o dirección <i>opcional</i></label>
     <form class="rol" id="formRol">
-      <input id="rol" type="text" inputmode="numeric" placeholder="manzana-predio  ej. 1235-5" disabled>
-      <button type="submit" disabled aria-label="Buscar rol">→</button>
+      <input id="rol" type="text" autocomplete="off" spellcheck="false" placeholder="1235-5  ·  Espoz 5783 depto 12" disabled>
+      <button type="submit" disabled aria-label="Buscar">→</button>
     </form>
+    <div class="resultados" id="resultadosDir" hidden></div>
   </div>
 
   <div class="paso">
-    <span class="rotulo"><span>04</span> Tu capa <i>KML · KMZ · GeoJSON</i></span>
-    <button class="importar" id="btnImportar" type="button">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v3h16v-3"/></svg>
-      <span>Importar archivo<small>o arrástralo al mapa</small></span>
-    </button>
-    <input type="file" id="archivoCapa" accept=".kml,.kmz,.geojson,.json,application/vnd.google-earth.kml+xml,application/vnd.google-earth.kmz" hidden>
-    <div class="capa-info" id="capaInfo" hidden></div>
+    <span class="rotulo"><span>04</span> Oferta <i>Portal Inmobiliario</i></span>
+    <div class="oferta">
+      <div class="segmento" role="group" aria-label="Operación">
+        <button type="button" data-operacion="venta" class="activo">Venta</button>
+        <button type="button" data-operacion="arriendo">Arriendo</button>
+      </div>
+      <select id="tipoOferta" aria-label="Tipo de propiedad">
+        <option value="">Todo tipo</option>
+        <option value="departamento">Departamentos</option>
+        <option value="casa">Casas</option>
+        <option value="oficina">Oficinas</option>
+        <option value="sitio">Sitios</option>
+        <option value="parcela">Parcelas</option>
+        <option value="bodega">Bodegas</option>
+        <option value="estacionamiento">Estacionamientos</option>
+        <option value="industrial">Industriales</option>
+        <option value="agricola">Agrícolas</option>
+      </select>
+    </div>
+    <a class="importar ver-oferta" id="verOferta" href="https://www.portalinmobiliario.com/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 4l16 16M14 4h6v6"/></svg>
+      <span>Ver avisos de esta zona ↗<small id="zonaOferta">la zona que ves en el mapa</small></span>
+    </a>
   </div>
 
   <div class="estado" id="estado" aria-live="polite"></div>
@@ -93,13 +110,9 @@
 </div>
 
 <div class="aviso" id="aviso" hidden></div>
-<div class="zona-soltar" id="zonaSoltar" hidden><div><b>Suelta tu archivo</b><span>KML · KMZ · GeoJSON</span></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="config.js"></script>
 <script src="app.js"></script>
-<script src="capa.js"></script>
 </body>
 </html>

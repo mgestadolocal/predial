@@ -5,3 +5,5 @@ __pycache__/
 .wrangler/
 node_modules/
 .dev.vars
+
+.secrets/

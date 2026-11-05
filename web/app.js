@@ -6,6 +6,7 @@
 
   const WMS_SII = "https://www4.sii.cl/mapasui/services/ui/wmsProxyService/call";
   const TGR_URL = "https://tgr.gob.cl/tramites-tgr/certificado-de-deuda-de-contribuciones/";
+  const PI_URL = "https://www.portalinmobiliario.com/";
   const SII_AVALUOS_URL = "https://www.sii.cl/servicios_online/1048-.html";
   const CHILE = L.latLngBounds([-56.0, -76.2], [-17.4, -66.3]);
   const ZOOM_PREDIOS = 13;   // desde aquí se cargan las teselas del SII
@@ -217,6 +218,7 @@
     $("#comuna").value = c.nombre;
     cerrarSugerencias();
     bloquearRol(false);
+    $("#resultadosDir").hidden = true;
     refrescarContornos();
     document.body.classList.remove("inicio");
     pintarEstado(`<span class="ok">●</span> <b>${esc(c.nombre)}</b> · código SII ${c.cod}`);
@@ -394,6 +396,7 @@
         </div>
       </div>
       <div class="otros">
+        <a class="boton" id="ofertaCerca" target="_blank" rel="noopener" href="${urlOferta(fichaZona = L.latLng(+plat, +plon).toBounds(1000))}" title="Portal Inmobiliario, 500 m alrededor del predio">${oferta.operacion === "arriendo" ? "En arriendo" : "En venta"} cerca ↗</a>
         <button class="boton" id="copiarFicha">Copiar ficha</button>
         <a class="boton" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${plat},${plon}">Google Maps ↗</a>
         <a class="boton" target="_blank" rel="noopener" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${plat},${plon}">Street View ↗</a>
@@ -407,6 +410,37 @@
     });
   }
 
+  // ── Oferta en Portal Inmobiliario ───────────────────────
+  // No se copia ningún aviso: solo se arma el enlace a la búsqueda en mapa del portal
+  // con el mismo recuadro (lat/lon) que se ve en Predial.
+  const oferta = { operacion: "venta", tipo: "" };
+  let fichaZona = null;  // recuadro de ~500 m alrededor del predio abierto en la ficha
+  try { Object.assign(oferta, JSON.parse(localStorage.getItem("predial-oferta") || "{}")); } catch {}
+  function urlOferta(b) {
+    const f = (n) => n.toFixed(6);
+    const ruta = [oferta.operacion, oferta.tipo].filter(Boolean).join("/");
+    return `${PI_URL}${ruta}/_DisplayType_M_item*location_lat:${f(b.getSouth())}*${f(b.getNorth())},lon:${f(b.getWest())}*${f(b.getEast())}`;
+  }
+  function actualizarOferta() {
+    const b = mapa.getBounds();
+    $("#verOferta").href = urlOferta(b);
+    const ancho = b.getSouthWest().distanceTo(b.getSouthEast()) / 1000;
+    const alto = b.getSouthWest().distanceTo(b.getNorthWest()) / 1000;
+    $("#zonaOferta").textContent = `zona visible · ${num.format(ancho)} × ${num.format(alto)} km`;
+    const cerca = $("#ofertaCerca");
+    if (cerca && fichaZona) {
+      cerca.href = urlOferta(fichaZona);
+      cerca.textContent = `${oferta.operacion === "arriendo" ? "En arriendo" : "En venta"} cerca ↗`;
+    }
+    document.querySelectorAll("[data-operacion]").forEach((x) => x.classList.toggle("activo", x.dataset.operacion === oferta.operacion));
+    $("#tipoOferta").value = oferta.tipo;
+    try { localStorage.setItem("predial-oferta", JSON.stringify(oferta)); } catch {}
+  }
+  document.querySelectorAll("[data-operacion]").forEach((x) => x.addEventListener("click", () => { oferta.operacion = x.dataset.operacion; actualizarOferta(); }));
+  $("#tipoOferta").addEventListener("change", (e) => { oferta.tipo = e.target.value; actualizarOferta(); });
+  mapa.on("moveend zoomend", actualizarOferta);
+  actualizarOferta();
+
   async function copiar(texto, el, etiqueta) {
     try { await navigator.clipboard.writeText(texto); } catch { return; }
     if (el.classList.contains("copia")) { el.classList.add("hecho"); setTimeout(() => el.classList.remove("hecho"), 1600); }
@@ -417,23 +451,102 @@
     const a = e.target.closest("[data-copiar-al-abrir]"); if (a) navigator.clipboard?.writeText(a.dataset.copiarAlAbrir).catch(() => {});
   });
 
-  // ── Búsqueda por rol ────────────────────────────────────
+  // ── Búsqueda por rol o dirección ────────────────────────
+  // Abre la ficha con los datos del rol (no con el punto): en un edificio, el punto devuelve
+  // los bienes comunes y no la unidad buscada (depto, oficina, bodega…).
+  async function mostrarRol(c, manzana, predio) {
+    pintarEstado(`Buscando rol <b>${manzana}-${predio}</b> en ${esc(c.nombre)}…`);
+    const r = await llamar("/rol", { cod: c.cod, manzana, predio });
+    if (!r.predio) return pintarEstado(`<span class="mal">●</span> El SII no encontró el rol ${manzana}-${predio} en ${esc(c.nombre)}`);
+    const lat = +r.predio.ubicacionX, lon = +r.predio.ubicacionY;
+    pintarEstado(`<span class="ok">●</span> Rol <b>${manzana}-${predio}</b> encontrado`);
+    if (marca) marca.setLatLng([lat, lon]).setIcon(icono(false)); else marca = L.marker([lat, lon], { icon: icono(false), interactive: false, keyboard: false }).addTo(mapa);
+    pintarFicha(r.predio, c, lat, lon);
+    escribirHash(lat, lon);
+    mapa.flyTo([lat, lon], Math.max(mapa.getZoom(), 18), { duration: 1.6 });
+  }
+
+  // Tipos de unidad que entiende el buscador del SII (listDestinos).
+  const UNIDADES = {
+    casa: 1, cs: 1, depto: 2, dpto: 2, dto: 2, dp: 2, departamento: 2, of: 3, ofi: 3, oficina: 3,
+    box: 4, bx: 4, estacionamiento: 4, est: 4, bodega: 5, bd: 5, parcela: 8, pc: 8,
+    local: 9, loc: 9, lc: 9, sitio: 10, lote: 10, block: 12, blk: 12,
+  };
+  const sinTildes = (t) => t.replace(/[áàäâ]/gi, (m) => (m === m.toUpperCase() ? "A" : "a")).replace(/[éèëê]/gi, "e")
+    .replace(/[íìïî]/gi, "i").replace(/[óòöô]/gi, "o").replace(/[úùüû]/gi, "u");
+  function leerDireccion(txt) {
+    let t = sinTildes(txt).replace(/[,#°º]/g, " ").replace(/\s+/g, " ").trim();
+    let detalle = 0, unidad = "";
+    const u = t.match(new RegExp(`\\s(${Object.keys(UNIDADES).join("|")})\\.?\\s*([a-z0-9-]{1,10})$`, "i"));
+    if (u) { detalle = UNIDADES[u[1].toLowerCase()]; unidad = u[2].toUpperCase(); t = t.slice(0, u.index).trim(); }
+    const n = t.match(/^(.*?[a-zñ].*?)\s+(?:n\.?\s*)?(\d{1,6})$/i);
+    if (!n) return null;
+    const calle = n[1].replace(/^(avenida|avda\.?|av\.?)\s+/i, "").replace(/[^a-zñ0-9 .'-]/gi, " ").replace(/\s+/g, " ").trim().toUpperCase();
+    return calle.length >= 2 ? { calle, numero: n[2], detalle, unidad } : null;
+  }
+
+  const resDir = $("#resultadosDir");
+  let candidatosDir = [];
+  function cerrarResultados() { resDir.hidden = true; resDir.innerHTML = ""; candidatosDir = []; }
+  async function buscarDireccion(c, d) {
+    const etiqueta = `${d.calle} ${d.numero}${d.unidad ? ` · ${d.unidad}` : ""}`;
+    pintarEstado(`Buscando <b>${esc(etiqueta)}</b> en ${esc(c.nombre)}…`);
+    const r = await llamar("/direccion", { cod: c.cod, calle: d.calle, numero: d.numero, detalle: d.detalle, unidad: d.unidad });
+    const todos = r.resultados || [];
+    // El SII compara de forma aproximada: primero los que tienen exactamente ese número (y esa unidad).
+    // Exacto: el número viene justo después de la última palabra de la calle (VELASQUEZ 2071),
+    // y la unidad, si se pidió, aparece después (DP 1001).
+    const ultima = d.calle.split(" ").pop().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const base = new RegExp(`(^|\\s)\\S*${ultima}\\s+0*${d.numero}(?=\\s|$)`, "i");
+    const uni = d.unidad ? new RegExp(`(^|\\s)0*${d.unidad.replace(/^0+/, "")}(\\s|$)`) : null;
+    const puntaje = (x) => {
+      const m = x.direccion.match(base);
+      if (!m) return 2;
+      return uni && !uni.test(x.direccion.slice(m.index + m[0].length)) ? 1 : 0;
+    };
+    // Dentro de cada grupo: viviendas, oficinas y locales antes que bodegas y estacionamientos.
+    const secundario = (x) => (/ESTACIONAMIENTO|BODEGA/.test(x.destino) ? 1 : 0);
+    candidatosDir = todos.map((x) => ({ ...x, p: puntaje(x) })).sort((a, b) =>
+      a.p - b.p || secundario(a) - secundario(b) || a.direccion.localeCompare(b.direccion, "es", { numeric: true }));
+    const exactos = candidatosDir.filter((x) => x.p === 0);
+    if (!candidatosDir.length) {
+      cerrarResultados();
+      return pintarEstado(`<span class="mal">●</span> El SII no encontró <b>${esc(etiqueta)}</b> en ${esc(c.nombre)}. Revisa el número o prueba sin “avenida”, “pasaje”, etc.`);
+    }
+    if (exactos.length === 1) { cerrarResultados(); return mostrarRol(c, exactos[0].manzana, exactos[0].predio); }
+    const MAX = 60, lista = candidatosDir.slice(0, MAX);
+    const total = r.total || candidatosDir.length;
+    pintarEstado(`<span class="ok">●</span> ${total.toLocaleString("es-CL")} resultado${total === 1 ? "" : "s"} para <b>${esc(etiqueta)}</b>`);
+    resDir.innerHTML = `
+      <div class="res-cab">${exactos.length ? `${exactos.length} con ese número` : "Sin coincidencia exacta; los más parecidos"}${total > MAX ? ` · muestro ${MAX} de ${total.toLocaleString("es-CL")}` : ""}
+        <button type="button" class="res-cerrar" aria-label="Cerrar resultados">×</button></div>
+      <ul>${lista.map((x, i) => `<li><button type="button" data-i="${i}"${x.p ? ' class="lejano"' : ""}>
+        <b>${esc(x.direccion)}</b><span>${esc(x.rol)} · ${esc(titulo(x.destino))}</span></button></li>`).join("")}</ul>
+      ${total > MAX && !d.unidad ? `<p class="res-nota">Agrega el depto, oficina o bodega para acotar, por ejemplo “${esc(d.calle.toLowerCase())} ${d.numero} depto 101”.</p>` : ""}`;
+    resDir.hidden = false;
+  }
+  resDir.addEventListener("click", async (e) => {
+    if (e.target.closest(".res-cerrar")) return cerrarResultados();
+    const b = e.target.closest("[data-i]"); if (!b) return;
+    const x = candidatosDir[+b.dataset.i], c = estado.comuna; if (!x || !c) return;
+    resDir.querySelectorAll("[data-i]").forEach((y) => y.classList.toggle("elegido", y === b));
+    try { await mostrarRol(c, x.manzana, x.predio); } catch (err) { errorBusqueda(err); }
+  });
+  function errorBusqueda(err) {
+    pintarEstado(`<span class="mal">●</span> ${err.message === "sin-api" ? "Falta configurar el intermediario (PREDIAL_API)" : "El SII no respondió; intenta de nuevo"}`);
+  }
+
   $("#formRol").addEventListener("submit", async (e) => {
     e.preventDefault();
     const c = estado.comuna; if (!c) return;
-    const m = $("#rol").value.trim().match(/^(\d{1,6})\s*[-–\s/]\s*(\d{1,6})$/);
-    if (!m) return pintarEstado(`<span class="mal">●</span> Escribe el rol como manzana-predio, por ejemplo 1235-5`);
-    pintarEstado(`Buscando rol <b>${m[1]}-${m[2]}</b> en ${esc(c.nombre)}…`);
+    const txt = $("#rol").value.trim(); if (!txt) return;
     try {
-      const r = await llamar("/rol", { cod: c.cod, manzana: +m[1], predio: +m[2] });
-      if (!r.predio) return pintarEstado(`<span class="mal">●</span> El SII no encontró el rol ${m[1]}-${m[2]} en ${esc(c.nombre)}`);
-      const lat = +r.predio.ubicacionX, lon = +r.predio.ubicacionY;
-      pintarEstado(`<span class="ok">●</span> Rol <b>${m[1]}-${m[2]}</b> encontrado`);
-      mapa.flyTo([lat, lon], 18, { duration: 1.8 });
-      mapa.once("moveend", () => consultar(lat, lon, { candidatas: [c] }));
-    } catch (err) {
-      pintarEstado(`<span class="mal">●</span> ${err.message === "sin-api" ? "Falta configurar el intermediario (PREDIAL_API)" : "El SII no respondió; intenta de nuevo"}`);
-    }
+      const m = txt.match(/^(\d{1,6})\s*[-–\s/]\s*(\d{1,6})$/);
+      if (m) { cerrarResultados(); return await mostrarRol(c, +m[1], +m[2]); }
+      const d = leerDireccion(txt);
+      if (!d) return pintarEstado(`<span class="mal">●</span> Escribe un rol (1235-5) o una dirección con número (Espoz 5783, opcional “depto 12”)`);
+      await buscarDireccion(c, d);
+    } catch (err) { errorBusqueda(err); }
   });
 
   // ── Fondo y rótulos ─────────────────────────────────────

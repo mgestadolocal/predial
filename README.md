@@ -9,11 +9,11 @@ No se descarga ni se aloja cartografía: los deslindes se cargan **en vivo** des
 ```
 navegador ──(imágenes WMS, sin CORS)──────────────► SII  wmsProxyService
     │
-    └──(fetch /predio, /rol)──► Cloudflare Worker ──► SII  mapasFacadeService
+    └──(fetch /predio, /rol, /direccion)──► Cloudflare Worker ──► SII  mapasFacadeService
 ```
 
 - `web/`: sitio estático (Leaflet). Se publica en GitHub Pages con `.github/workflows/pages.yml`.
-- `worker/`: intermediario mínimo. La API del SII no envía cabeceras CORS, así que el navegador no puede leer la ficha directamente. Solo expone dos consultas de lectura, valida los parámetros y guarda en caché las respuestas por 24 horas. Se publica con `.github/workflows/worker.yml`.
+- `worker/`: intermediario mínimo. La API del SII no envía cabeceras CORS, así que el navegador no puede leer la ficha directamente. Solo expone tres consultas de lectura, valida los parámetros y guarda en caché las respuestas por 24 horas. Se publica con `.github/workflows/worker.yml`.
 - `web/data/comunas.json`: catálogo de las 347 comunas con cartografía del SII (código SII, capa WMS, región y extensión). `web/data/comunas.geojson` tiene los contornos simplificados de la BCN.
 - `tools/`: scripts para rehacer el catálogo (`catalogo_comunas.py`, `catalogo_completar.py`, `cruce.py`, `armar_datos_web.py`) y un servidor de prueba (`servidor_local.py`).
 
@@ -37,14 +37,17 @@ python tools/servidor_local.py
 # abrir http://localhost:8787/?api=http://localhost:8787
 ```
 
-## Importar KML / KMZ / GeoJSON
+## Búsqueda por rol o dirección
 
-En la consola, el paso 04 sirve para importar un archivo, con el botón o arrastrándolo al mapa. Se dibuja sobre el mapa y en el panel derecho aparece, para cada elemento, el tipo, la superficie o el largo y las comunas donde cae. **Buscar predios** consulta el SII:
-- **Punto:** el predio exacto en ese lugar.
-- **Polígono:** una grilla de hasta 60 puntos dentro.
-- **Línea:** puntos a lo largo, hasta 60.
+El paso 03 acepta un rol (`1235-5`) o una dirección con número (`Espoz 5783`, `Apoquindo 3000 of 301`, `Diego de Velásquez 2071 depto 1001`). La dirección se busca con el buscador del propio SII (ruta `/direccion` del Worker). Si se indica la unidad (depto, oficina, local, bodega, box, casa, parcela, sitio, block), se llega al rol de esa unidad y no al del edificio. La ficha se arma con los datos del rol, no con el punto del mapa.
 
-Junta los roles distintos y permite exportarlos a CSV. El archivo se procesa en el navegador y no se sube a ningún servidor. Como es un muestreo, en polígonos grandes puede omitir lotes muy chicos.
+## Oferta en Portal Inmobiliario
+
+El paso 04 de la consola abre la búsqueda en mapa de Portal Inmobiliario con el mismo recuadro que se ve en Predial (venta o arriendo, y tipo de propiedad). La ficha de cada predio tiene además un botón que abre el portal en 500 m alrededor. No se copia ningún aviso: solo se arma el enlace.
+
+## Importar KML / KMZ / GeoJSON (desactivado)
+
+`web/capa.js` importa un archivo, lo dibuja y busca los predios por muestreo. Está desactivado por ahora: para volver a activarlo, restaurar en `web/index.html` el paso de importación, la zona para soltar archivos y los scripts de JSZip, togeojson y `capa.js` (ver el commit 712f423).
 
 ## Enlaces compartibles
 

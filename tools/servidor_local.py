@@ -1,4 +1,4 @@
-"""Servidor de prueba: sirve web/ y replica las rutas /predio y /rol del Worker.
+"""Servidor de prueba: sirve web/ y replica las rutas /predio, /rol y /direccion del Worker.
 Uso: python tools/servidor_local.py   ->  http://localhost:8787/?api=http://localhost:8787
 """
 import json, re, time, requests
@@ -40,6 +40,15 @@ class H_(SimpleHTTPRequestHandler):
             r = sii("getPredioNacional", {"predio": {"comuna": int(q["cod"]), "manzana": int(q["manzana"]), "predio": int(q["predio"])}, "servicios": []})
             r = r[0] if isinstance(r, list) and r else r
             return self.responder({"predio": r} if r and r.get("ubicacionX") else {"vacio": True})
+        if u.path == "/direccion":
+            calle = q.get("calle", "").strip().upper(); num = q.get("numero", "").strip()
+            if not re.fullmatch(r"[A-Z0-9Ñ .'-]{2,60}", calle) or not re.fullmatch(r"\d{1,6}", num): return self.responder({"error": "parámetros"}, 400)
+            r = sii("getPrediosDireccion", {"rolDireccion": {"comuna": int(q["cod"]), "nombreComuna": "", "calle": calle, "numeroCalleStr": num,
+                    "detalle": int(q.get("detalle", 0)), "numeroDetalleStr": q.get("unidad", "").upper(), "lugar": ""}, "servicios": []})
+            r = r if isinstance(r, list) else []
+            res = [{"rol": x["rol"], "manzana": x["manzana"], "predio": x["predio"], "direccion": (x.get("direccion") or "").strip(),
+                    "destino": x.get("destinoDescripcion") or ""} for x in r[:400]]
+            return self.responder({"resultados": res, "total": len(r), "vacio": not r})
         return super().do_GET()
 
 if __name__ == "__main__":

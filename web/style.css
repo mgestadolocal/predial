@@ -379,3 +379,44 @@ body.con-ficha .aviso { left: calc(50% + (var(--consola) - 400px) / 2); }
 .rp-dir small { display: block; font: 11px var(--mono); color: var(--papel-3); text-transform: none; }
 .rp-val { font: 12px var(--mono); color: var(--papel-2); padding-right: 4px; }
 .an-pie { margin: 0; padding: 16px 22px 24px; font: 11px var(--mono); color: var(--papel-3); line-height: 1.5; }
+
+/* ── Oferta (enlace a Portal Inmobiliario) ────────────── */
+.oferta { display: grid; grid-template-columns: auto 1fr; gap: 4px; margin-bottom: 6px; }
+.segmento { display: flex; border: 1px solid var(--linea-fuerte); }
+.segmento button {
+  padding: 8px 10px; border: 0; border-right: 1px solid var(--linea); background: transparent; cursor: pointer;
+  font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--papel-2);
+}
+.segmento button:last-child { border-right: 0; }
+.segmento button.activo { background: var(--fosforo); color: var(--tinta); }
+.segmento button:hover:not(.activo) { color: var(--papel); }
+.oferta select {
+  width: 100%; min-width: 0; padding: 8px 10px; background: var(--tinta-2); color: var(--papel);
+  border: 1px solid var(--linea-fuerte); border-radius: 0; font: 500 12.5px var(--mono); cursor: pointer;
+}
+.oferta select:focus { outline: none; border-color: var(--fosforo); box-shadow: 0 0 0 3px var(--fosforo-suave); }
+.ver-oferta { text-decoration: none; color: var(--papel); border-style: solid; }
+.ver-oferta svg { stroke: var(--fosforo); }
+.ver-oferta:hover { border-color: var(--fosforo); background: var(--fosforo-suave); }
+.capa-info[hidden] { display: none; }
+
+/* ── Resultados de búsqueda por dirección ─────────────── */
+.resultados { margin-top: 6px; border: 1px solid var(--linea-fuerte); background: var(--tinta-2); }
+.res-cab {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 10px;
+  border-bottom: 1px solid var(--linea); font: 500 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--papel-3);
+}
+.res-cerrar { background: none; border: 0; color: var(--papel-2); font: 16px var(--mono); cursor: pointer; padding: 0 2px; }
+.res-cerrar:hover { color: var(--papel); }
+.resultados ul { list-style: none; margin: 0; padding: 0; max-height: 240px; overflow-y: auto; }
+.resultados li + li { border-top: 1px dashed var(--linea); }
+.resultados li button {
+  display: block; width: 100%; padding: 8px 10px; background: none; border: 0; border-left: 2px solid transparent;
+  text-align: left; cursor: pointer; color: var(--papel);
+}
+.resultados li button b { display: block; font: 500 12.5px var(--mono); }
+.resultados li button span { font: 11px var(--mono); color: var(--papel-3); }
+.resultados li button:hover { background: var(--fosforo-suave); }
+.resultados li button.elegido { border-left-color: var(--fosforo); background: var(--fosforo-suave); }
+.resultados li button.lejano b { color: var(--papel-2); }
+.res-nota { margin: 0; padding: 8px 10px; border-top: 1px solid var(--linea); font: 11px var(--mono); color: var(--papel-3); }

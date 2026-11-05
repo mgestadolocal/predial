@@ -1,6 +1,6 @@
 // Intermediario mínimo entre la web y el visor de mapas del SII.
 // El SII no envía cabeceras CORS, así que el navegador no puede leer su API directamente.
-// Solo expone dos consultas de lectura (predio por punto y predio por rol) con validación estricta;
+// Solo expone tres consultas de lectura (predio por punto, por rol y por dirección) con validación estricta;
 // no es un proxy abierto.
 
 const SII = "https://www4.sii.cl/mapasui/services/data/mapasFacadeService/";
@@ -103,6 +103,31 @@ async function predioPorRol(p) {
   return { predio: item };
 }
 
+// Búsqueda por dirección (la misma del visor del SII). El SII compara de forma aproximada:
+// devuelve todas las unidades del número (deptos, oficinas, bodegas…) y la web ordena las exactas primero.
+const CALLE_RE = /^[A-Z0-9Ñ .'-]{2,60}$/;
+const MAX_RESULTADOS = 400;
+async function prediosPorDireccion(p) {
+  const cod = entero(p.get("cod"), 1000, 99999);
+  const calle = (p.get("calle") || "").trim().toUpperCase();
+  const numero = (p.get("numero") || "").trim();
+  const detalle = entero(p.get("detalle") || "0", 0, 12);
+  const unidad = (p.get("unidad") || "").trim().toUpperCase();
+  if (!cod || !CALLE_RE.test(calle) || !/^\d{1,6}$/.test(numero) || detalle === null || !/^[A-Z0-9-]{0,10}$/.test(unidad)) {
+    return { error: "parámetros inválidos", status: 400 };
+  }
+  const d = await sii("getPrediosDireccion", {
+    rolDireccion: { comuna: cod, nombreComuna: "", calle, numeroCalleStr: numero, detalle, numeroDetalleStr: unidad, lugar: "" },
+    servicios: [],
+  });
+  if (!Array.isArray(d)) return { resultados: [], total: 0 };
+  const resultados = d.slice(0, MAX_RESULTADOS).map((x) => ({
+    rol: x.rol, manzana: x.manzana, predio: x.predio,
+    direccion: String(x.direccion || "").trim(), destino: x.destinoDescripcion || "",
+  }));
+  return { resultados, total: d.length, vacio: !d.length };
+}
+
 export default {
   async fetch(req, env, ctx) {
     const url = new URL(req.url);
@@ -112,7 +137,7 @@ export default {
 
     const ruta = url.pathname.replace(/\/+$/, "");
     if (ruta === "" || ruta === "/salud") return json({ ok: true }, 200, h);
-    const fn = { "/predio": predioPorPunto, "/rol": predioPorRol }[ruta];
+    const fn = { "/predio": predioPorPunto, "/rol": predioPorRol, "/direccion": prediosPorDireccion }[ruta];
     if (!fn) return json({ error: "ruta desconocida" }, 404, h);
 
     // Caché en el borde de Cloudflare: el mismo predio consultado dos veces no vuelve a ir al SII.
