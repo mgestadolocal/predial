@@ -226,7 +226,6 @@ input:disabled { opacity: .4; cursor: not-allowed; }
 .tabla dt, .tabla dd { margin: 0; padding: 9px 0; border-bottom: 1px dashed var(--linea); }
 .tabla dt { font: 500 10.5px/1.9 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--papel-3); padding-right: 18px; }
 .tabla dd { text-align: right; font: 13.5px var(--mono); }
-.tabla dd.sin { color: var(--papel-3); font-style: italic; }
 .seccion { padding: 16px 22px 0; font: 500 11px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--fosforo); }
 
 .tgr { margin: 14px 22px 22px; padding: 16px; border: 1px solid var(--senal); background: rgba(255, 91, 31, .06); }
