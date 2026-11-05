@@ -6,6 +6,7 @@
 
   const WMS_SII = "https://www4.sii.cl/mapasui/services/ui/wmsProxyService/call";
   const TGR_URL = "https://tgr.gob.cl/tramites-tgr/certificado-de-deuda-de-contribuciones/";
+  const SII_AVALUOS_URL = "https://www.sii.cl/servicios_online/1048-.html";
   const CHILE = L.latLngBounds([-56.0, -76.2], [-17.4, -66.3]);
   const ZOOM_PREDIOS = 13;   // desde aquí se cargan las teselas del SII
   const ZOOM_CLIC = 15;      // desde aquí un clic consulta un predio
@@ -339,24 +340,53 @@
     const pa = total ? (afecto / total) * 100 : 0;
     const supCons = Math.max(+p.supConsMt2 || 0, +p.supConsMt3 || 0);
     const supTerr = +p.supTerreno || 0;
+    // El SII informa la unidad aparte: en predios rurales la superficie viene en hectáreas.
+    const unidad = (u) => (/h/i.test(u || "") ? "ha" : "m²");
     const ah = p.datosAh || {};
     const plat = p.ubicacionX || lat, plon = p.ubicacionY || lon;
-    const filas = [
-      ["Destino", titulo(p.destinoDescripcion)],
-      ["Ubicación", titulo(p.ubicacion)],
-      supTerr ? ["Sup. terreno", `${num.format(supTerr)} m²`] : null,
-      supCons ? ["Sup. construida", `${num.format(supCons)} m²`] : null,
-      ["Periodo", titulo(p.periodo)],
-      ["Reavalúo", titulo(p.eacsDescripcion)],
-      p.agnoSancion ? ["Año sanción", p.agnoSancion] : null,
-      ["Coordenadas", `${plat.toFixed(5)}, ${plon.toFixed(5)}`],
-    ].filter(Boolean);
-    const filasAh = ah.codigoAh ? [
+    const SIN = "El SII no lo informa";
+    const pct = (v) => `${num.format(v)} %`;
+
+    // Secciones de la ficha: [título, filas]. Una fila sin dato muestra el aviso en vez de ocultarse.
+    const secciones = [
+      ["Terreno", [
+        ["Superficie", supTerr ? `${num.format(supTerr)} ${unidad(p.medidaSup)}` : SIN],
+        ["Ubicación", titulo(p.ubicacion) || SIN],
+      ]],
+      ["Construcciones", [
+        ["Sup. construida", supCons ? `${num.format(supCons)} ${unidad(p.medidaSupConst)}` : (total ? "Sin construcciones registradas" : SIN)],
+        ["Detalle", "Material, calidad y año: ver certificado detallado"],
+      ]],
+      ["Destino y uso", [
+        ["Destino", titulo(p.destinoDescripcion) || SIN],
+      ]],
+      ["Exenciones", total ? [
+        ["Monto exento", clp.format(exento)],
+        ["Parte exenta", pct(total ? (exento / total) * 100 : 0)],
+        ["Monto afecto", clp.format(afecto)],
+        ["Tipo de exención", "Ver certificado detallado"],
+      ] : [["Monto exento", SIN]]],
+      ["Antecedentes catastrales", [
+        ["Rol", `${rol} · comuna ${c.cod}`],
+        ["Dirección", (p.direccion || "").trim() || SIN],
+        ["Reavalúo", titulo(p.eacsDescripcion) || SIN],
+        p.agnoSancion ? ["Año sanción", p.agnoSancion] : null,
+        ["Periodo", titulo(p.periodo) || SIN],
+        ["Coordenadas", `${(+plat).toFixed(5)}, ${(+plon).toFixed(5)}`],
+      ].filter(Boolean)],
+    ];
+    if (ah.codigoAh) secciones.push(["Área homogénea", [
       ["Código", ah.codigoAh],
       ah.valorUnitario ? ["Valor unitario", `${clp.format(ah.valorUnitario)} / m²`] : null,
       ah.rangoSuperficie && ah.rangoSuperficie.trim() ? ["Rango superficie", `${ah.rangoSuperficie.trim()} m²`] : null,
-    ].filter(Boolean) : [];
-    const dl = (fs) => `<dl class="tabla">${fs.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+    ].filter(Boolean)]);
+    const dl = (fs) => `<dl class="tabla">${fs.map(([k, v]) => `<dt>${esc(k)}</dt><dd${v === SIN ? ' class="sin"' : ""}>${esc(v)}</dd>`).join("")}</dl>`;
+    const copias = `
+        <div class="copias">
+          <button class="copia" data-copiar="${esc(region ? region.nombre : "")}"><span>Región</span><b>${esc(region ? `${region.romano} · ${region.nombre}` : c.region)}</b></button>
+          <button class="copia" data-copiar="${esc(c.nombre)}"><span>Comuna</span><b>${esc(c.nombre)}</b></button>
+          <button class="copia" data-copiar="${esc(rol)}"><span>Rol</span><b>${esc(rol)}</b></button>
+        </div>`;
 
     abrirFicha(`
       <div class="ficha-cab">
@@ -371,16 +401,19 @@
         ${total ? `<div class="barra" aria-hidden="true"><i style="width:${pa}%"></i><i style="width:${100 - pa}%"></i></div>
         <div class="leyenda"><span>Afecto <b>${clp.format(afecto)}</b></span><span>Exento <b>${clp.format(exento)}</b></span></div>` : ""}
       </div>
-      ${dl(filas)}
-      ${filasAh.length ? `<div class="seccion">Área homogénea</div>${dl(filasAh)}` : ""}
+      ${secciones.map(([t, fs]) => `<div class="seccion">${esc(t)}</div>${dl(fs)}`).join("")}
+      <div class="tgr sii">
+        <h3>Más antecedentes en el SII</h3>
+        <p>El detalle de cada construcción (material, calidad, año y superficie) y el tipo de exención no se publican en el mapa del SII. Están en el <b>certificado de avalúo fiscal detallado</b>, que pide la clave tributaria del propietario. La <b>consulta de avalúos y contribuciones</b> es pública, pero tiene captcha. Copia los datos y abre el SII.</p>
+        ${copias}
+        <div class="acciones">
+          <a class="boton" href="${SII_AVALUOS_URL}" target="_blank" rel="noopener" data-copiar-al-abrir="${esc(rol)}">Avalúos y certificados SII ↗</a>
+        </div>
+      </div>
       <div class="tgr">
         <h3>¿De quién es?</h3>
         <p>La TGR emite el certificado de deuda de contribuciones con el nombre del propietario. Copia estos datos, abre la TGR y completa el formulario; el certificado se abre como PDF.</p>
-        <div class="copias">
-          <button class="copia" data-copiar="${esc(region ? region.nombre : "")}"><span>Región</span><b>${esc(region ? `${region.romano} · ${region.nombre}` : c.region)}</b></button>
-          <button class="copia" data-copiar="${esc(c.nombre)}"><span>Comuna</span><b>${esc(c.nombre)}</b></button>
-          <button class="copia" data-copiar="${esc(rol)}"><span>Rol</span><b>${esc(rol)}</b></button>
-        </div>
+        ${copias}
         <div class="acciones">
           <a class="boton primario" href="${TGR_URL}" target="_blank" rel="noopener" data-copiar-al-abrir="${esc(rol)}">Abrir certificado TGR ↗</a>
         </div>
@@ -394,7 +427,8 @@
     $("#copiarFicha").addEventListener("click", (e) => {
       const txt = [`Rol ${rol} · ${c.nombre} (${c.cod})`, (p.direccion || "").trim(),
         `Avalúo total: ${clp.format(total)} (afecto ${clp.format(afecto)}, exento ${clp.format(exento)})`,
-        ...filas.map(([k, v]) => `${k}: ${v}`), location.href].filter(Boolean).join("\n");
+        ...secciones.flatMap(([t, fs]) => ["", t.toUpperCase(), ...fs.map(([k, v]) => `${k}: ${v}`)]),
+        "", location.href].join("\n");
       copiar(txt, e.currentTarget, "Copiado ✓");
     });
   }
