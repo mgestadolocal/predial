@@ -34,8 +34,8 @@
 
   // ── Mapa ────────────────────────────────────────────────
   const mapa = L.map("mapa", {
-    zoomControl: false, minZoom: 4, maxZoom: 20, zoomSnap: 0.25, zoomDelta: 0.5,
-    wheelPxPerZoomLevel: 90, worldCopyJump: false, maxBounds: CHILE.pad(0.6),
+    zoomControl: false, minZoom: 3, maxZoom: 20, zoomSnap: 0.25, zoomDelta: 0.5,
+    wheelPxPerZoomLevel: 90, worldCopyJump: false,
   });
   L.control.zoom({ position: "bottomright" }).addTo(mapa);
   mapa.createPane("rotulos").style.zIndex = 460;
@@ -47,7 +47,7 @@
       maxZoom: 20, maxNativeZoom: 16, className: "base-noche", attribution: "Fondo &copy; Esri, HERE, Garmin, &copy; OpenStreetMap",
     }),
     satelite: L.tileLayer(ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}", {
-      maxZoom: 20, maxNativeZoom: 19, className: "base-sat", attribution: "Imágenes &copy; Esri, Maxar",
+      maxZoom: 20, maxNativeZoom: 18, className: "base-sat", attribution: "Imágenes &copy; Esri, Maxar",
     }),
   };
   const rotulosBase = L.tileLayer(ESRI + "Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
@@ -58,18 +58,26 @@
   document.body.classList.add("fondo-noche");
   mapa.attributionControl.setPrefix("Predios: <a href='https://www4.sii.cl/mapasui/' target='_blank' rel='noopener'>SII</a>");
 
-  function encuadreInicial(anim) {
-    const pad = movil() ? { paddingTopLeft: [10, 10], paddingBottomRight: [10, innerHeight * 0.55] }
-                        : { paddingTopLeft: [420, 30], paddingBottomRight: [30, 30] };
-    mapa.fitBounds(CHILE, { ...pad, animate: anim });
+  // Espacio que tapan los paneles: el mapa encuadra en la parte libre.
+  const clase = (c) => document.body.classList.contains(c);
+  function altoHoja() {
+    if (!movil()) return 0;
+    // Alto final según el estado de la hoja (no el actual, que puede estar en transición).
+    if (clase("hoja-cerrada")) return 184;
+    if (clase("hoja-abierta")) return innerHeight * 0.88;
+    return innerHeight * 0.46;
   }
-  encuadreInicial(false);
-
   function paddingVista() {
-    if (movil()) return { paddingTopLeft: [16, 70], paddingBottomRight: [16, innerHeight * 0.46] };
-    const der = document.body.classList.contains("con-ficha") ? 430 : 40;
-    return { paddingTopLeft: [420, 40], paddingBottomRight: [der, 40] };
+    if (movil()) return { paddingTopLeft: [16, 64], paddingBottomRight: [16, altoHoja() + 16] };
+    const izq = clase("panel-oculto") ? 40 : 420;
+    const der = clase("con-ficha") && !clase("ficha-min") ? 440 : 60;
+    return { paddingTopLeft: [izq, 40], paddingBottomRight: [der, 40] };
   }
+  function encuadreInicial(anim) {
+    // Chile continental (sin islas): completo y centrado en el espacio libre.
+    mapa.fitBounds(L.latLngBounds([-55.9, -75.8], [-17.5, -66.4]), { ...paddingVista(), animate: anim });
+  }
+  encuadreInicial(false);  // se repite al final, cuando los paneles ya tienen su tamaño
 
   // ── Lecturas ────────────────────────────────────────────
   const fmtCoord = (v) => v.toFixed(5).replace(".", ",");
@@ -85,7 +93,9 @@
     const c = estado.porCod.get(cod);
     const enRegion = estado.region && c && c.region === estado.region;
     if (estado.comuna && (cod === estado.comuna.cod || (estado.comuna.cod === 13134 || estado.comuna.cod === 13135) && cod === 13101)) {
-      return { color: "#c8ff3c", weight: 2.2, opacity: 1, fillColor: "#c8ff3c", fillOpacity: 0.0, dashArray: null };
+      return estado.fondo === "satelite"
+        ? { color: "#f4f1e6", weight: 1.4, opacity: 0.75, fillColor: "#000", fillOpacity: 0.0, dashArray: "6 4" }
+        : { color: "#c8ff3c", weight: 2.2, opacity: 1, fillColor: "#c8ff3c", fillOpacity: 0.0, dashArray: null };
     }
     if (enRegion) return { color: "#e8e6df", weight: 0.9, opacity: 0.55, fillColor: "#c8ff3c", fillOpacity: 0.035, dashArray: null };
     return { color: "#e8e6df", weight: 0.5, opacity: estado.region ? 0.12 : 0.28, fillOpacity: 0, fillColor: "#000", dashArray: null };
@@ -144,7 +154,16 @@
 
   // ── Capas de predios del SII ────────────────────────────
   const capasSII = new Map();
+  // Se pide cada tesela al SII en 1,5× su tamaño y se muestra a 256 px: las líneas quedan más delgadas.
+  // Con los números de rol se pide al tamaño normal para que el texto no se achique.
+  const ESCALA_LINEAS = 1.5;
   function capaSII(c) {
+    const capa = crearCapaSII(c);
+    const px = Math.round(256 * (estado.rotulos ? 1 : ESCALA_LINEAS));
+    capa.wmsParams.width = capa.wmsParams.height = px;
+    return capa;
+  }
+  function crearCapaSII(c) {
     return L.tileLayer.wms(WMS_SII, {
       layers: c.layer, styles: estado.rotulos ? "PREDIOS_WMS_V0" : "polygon",
       format: "image/png", transparent: true, version: "1.1.1",
@@ -200,6 +219,7 @@
 
   function elegirRegion(id, { volar = true } = {}) {
     estado.region = id;
+    if (volar) estado.editandoLugar = true;
     document.querySelectorAll("#regiones button").forEach((b) => b.setAttribute("aria-selected", String(+b.dataset.r === id)));
     const input = $("#comuna");
     input.disabled = false;
@@ -215,6 +235,9 @@
   function elegirComuna(c, { volar = true } = {}) {
     if (estado.region !== c.region) elegirRegion(c.region, { volar: false });
     estado.comuna = c;
+    estado.editandoLugar = false;
+    pintarLugar();
+    if (volar && movil()) fijarHoja("cerrada");
     $("#comuna").value = c.nombre;
     cerrarSugerencias();
     bloquearRol(false);
@@ -228,6 +251,21 @@
     }
     escribirHash();
   }
+
+  // Resumen "RM · Metropolitana > Vitacura": pliega la grilla de regiones una vez elegida la comuna.
+  function pintarLugar() {
+    const c = estado.comuna, r = c && estado.regiones.find((x) => x.id === c.region);
+    const compacto = !!c && !estado.editandoLugar;
+    document.body.classList.toggle("lugar-compacto", compacto);
+    $("#lugarResumen").hidden = !compacto;
+    if (c) $("#lugarResumen .lr-ruta").innerHTML =
+      `<span>${esc(r ? r.romano : "")}</span>${esc(r ? r.nombre : "")}<i>›</i><b>${esc(c.nombre)}</b>`;
+  }
+  $("#cambiarLugar").addEventListener("click", () => {
+    estado.editandoLugar = true; pintarLugar();
+    if (movil()) fijarHoja("abierta");
+    setTimeout(() => $("#comuna").focus(), 50);
+  });
 
   function bloquearRol(si) {
     $("#rol").disabled = si; $("#formRol button").disabled = si;
@@ -325,9 +363,17 @@
   const ficha = $("#ficha"), fichaCuerpo = $("#fichaCuerpo");
   function abrirFicha(html) {
     fichaCuerpo.innerHTML = html; ficha.hidden = false; document.body.classList.add("con-ficha");
+    minimizarFicha(false);
   }
+  function minimizarFicha(si) {
+    document.body.classList.toggle("ficha-min", si);
+    $("#fichaPill").hidden = !si;
+  }
+  $("#minimizarFicha").addEventListener("click", () => minimizarFicha(true));
+  $("#fichaPill").addEventListener("click", () => minimizarFicha(false));
   function cerrarFicha() {
     ficha.hidden = true; document.body.classList.remove("con-ficha");
+    minimizarFicha(false);
     consultaId++;
     if (marca) { mapa.removeLayer(marca); marca = null; }
     escribirHash();
@@ -396,12 +442,19 @@
         </div>
       </div>
       <div class="otros">
+        <button class="boton primario" id="compartirFicha" type="button">Compartir</button>
         <a class="boton" id="ofertaCerca" target="_blank" rel="noopener" href="${urlOferta(fichaZona = L.latLng(+plat, +plon).toBounds(1000))}" title="Portal Inmobiliario, 500 m alrededor del predio">${oferta.operacion === "arriendo" ? "En arriendo" : "En venta"} cerca ↗</a>
         <button class="boton" id="copiarFicha">Copiar ficha</button>
         <a class="boton" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${plat},${plon}">Google Maps ↗</a>
         <a class="boton" target="_blank" rel="noopener" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${plat},${plon}">Street View ↗</a>
       </div>`);
 
+    $("#fichaPill").innerHTML = `<span>Rol</span> ${esc(rol)} <small>${esc(c.nombre)}</small>`;
+    $("#compartirFicha").addEventListener("click", async (e) => {
+      const url = location.href;
+      if (navigator.share && movil()) { try { await navigator.share({ title: `Rol ${rol} · ${c.nombre}`, url }); } catch {} return; }
+      copiar(url, e.currentTarget, "Enlace copiado ✓");
+    });
     $("#copiarFicha").addEventListener("click", (e) => {
       const txt = [`Rol ${rol} · ${c.nombre} (${c.cod})`, (p.direccion || "").trim(),
         `Avalúo total: ${clp.format(total)} (afecto ${clp.format(afecto)}, exento ${clp.format(exento)})`,
@@ -462,8 +515,11 @@
     pintarEstado(`<span class="ok">●</span> Rol <b>${manzana}-${predio}</b> encontrado`);
     if (marca) marca.setLatLng([lat, lon]).setIcon(icono(false)); else marca = L.marker([lat, lon], { icon: icono(false), interactive: false, keyboard: false }).addTo(mapa);
     pintarFicha(r.predio, c, lat, lon);
-    escribirHash(lat, lon);
-    mapa.flyTo([lat, lon], Math.max(mapa.getZoom(), 18), { duration: 1.6 });
+    escribirHash(lat, lon, `${manzana}-${predio}`);
+    const z = Math.max(mapa.getZoom(), 18);
+    // En celular la ficha tapa la parte baja: el predio queda en la franja visible de arriba.
+    const destino = movil() ? mapa.unproject(mapa.project([lat, lon], z).add([0, innerHeight * 0.39]), z) : L.latLng(lat, lon);
+    mapa.flyTo(destino, z, { duration: 1.6 });
   }
 
   // Tipos de unidad que entiende el buscador del SII (listDestinos).
@@ -556,27 +612,199 @@
     document.body.classList.replace(`fondo-${estado.fondo}`, `fondo-${f}`);
     estado.fondo = f;
     document.querySelectorAll("[data-fondo]").forEach((x) => x.classList.toggle("activo", x === b));
+    refrescarContornos();
   }));
+  // Intensidad de los deslindes (se guarda en el navegador)
+  const intensidad = $("#intensidad");
+  function fijarIntensidad(v) {
+    document.documentElement.style.setProperty("--lineas", v);
+    try { localStorage.setItem("predial-lineas", v); } catch {}
+  }
+  try { const v = localStorage.getItem("predial-lineas"); if (v) intensidad.value = v; } catch {}
+  fijarIntensidad(intensidad.value);
+  intensidad.addEventListener("input", () => fijarIntensidad(intensidad.value));
+
   $("#btnRotulos").addEventListener("click", (e) => {
     estado.rotulos = !estado.rotulos;
     e.currentTarget.classList.toggle("activo", estado.rotulos);
     rehacerCapas();
   });
 
-  // ── Enlace compartible: #comuna[/lat/lon] ───────────────
-  function escribirHash(lat, lon) {
-    const h = estado.comuna ? `#${estado.comuna.cod}${lat != null ? `/${lat.toFixed(6)}/${lon.toFixed(6)}` : ""}` : "";
+  // ── Enlace compartible: #comuna[/lat/lon[/manzana-predio]] ──
+  // Con el rol, el enlace abre la unidad exacta (en un edificio, el punto solo da los bienes comunes).
+  function escribirHash(lat, lon, rol) {
+    const h = estado.comuna ? `#${estado.comuna.cod}${lat != null ? `/${lat.toFixed(6)}/${lon.toFixed(6)}${rol ? `/${rol}` : ""}` : ""}` : "";
     history.replaceState(null, "", h || location.pathname + location.search);
   }
   function leerHash() {
-    const [cod, lat, lon] = location.hash.slice(1).split("/");
+    const [cod, lat, lon, rol] = location.hash.slice(1).split("/");
     const c = estado.porCod.get(+cod); if (!c) return;
-    if (lat && lon) {
+    const m = (rol || "").match(/^(\d{1,6})-(\d{1,6})$/);
+    if (lat && lon && m) {
+      elegirComuna(c, { volar: false });
+      mapa.setView([+lat, +lon], 18);
+      mostrarRol(c, +m[1], +m[2]).catch(errorBusqueda);
+    } else if (lat && lon) {
       elegirComuna(c, { volar: false });
       mapa.setView([+lat, +lon], 18);
       consultar(+lat, +lon, { candidatas: [c] });
     } else elegirComuna(c);
   }
+
+  // ── Buscar lugar o dirección (OpenStreetMap / Nominatim) ──
+  // Se consulta solo al apretar Enter (sin autocompletar), como pide la política de uso de Nominatim.
+  const NOMINATIM = "https://nominatim.openstreetmap.org/search";
+  const TIPOS_LUGAR = {
+    city: "Ciudad", town: "Pueblo", village: "Localidad", hamlet: "Caserío", locality: "Sector", suburb: "Barrio",
+    neighbourhood: "Barrio", quarter: "Barrio", municipality: "Comuna", county: "Provincia", state: "Región",
+    road: "Calle", residential: "Calle", living_street: "Pasaje", pedestrian: "Paseo", primary: "Avenida", secondary: "Avenida",
+    tertiary: "Calle", unclassified: "Camino", service: "Calle", track: "Camino", highway: "Calle", house: "Dirección", building: "Edificio", amenity: "Lugar", tourism: "Turismo",
+    natural: "Lugar natural", water: "Agua", peak: "Cerro", beach: "Playa", bay: "Bahía", island: "Isla",
+  };
+  // Nombre legible: en una dirección OSM entrega "5783, Espoz, …"; se arma "Espoz 5783".
+  function nombreLugar(x) {
+    const partes = x.display_name.split(", ").filter((p) => p !== "Chile" && !/^\d{5,}$/.test(p));
+    if (/^\d+[a-z]?$/i.test(partes[0]) && partes[1]) return { nombre: `${partes[1]} ${partes[0]}`, resto: partes.slice(2, 5).join(", ") };
+    const nombre = x.name || partes[0];
+    return { nombre, resto: partes.filter((p) => p !== nombre).slice(0, 3).join(", ") };
+  }
+  const resLugar = $("#resultadosLugar");
+  let lugares = [];
+  function cerrarLugares() { resLugar.hidden = true; resLugar.innerHTML = ""; lugares = []; }
+  function irALugar(r) {
+    cerrarLugares();
+    const lat = +r.lat, lon = +r.lon;
+    const [s, n, w, e] = (r.boundingbox || []).map(Number);
+    const esPunto = r.place_rank >= 26;  // calle, número o edificio: se abre el predio
+    const cs = comunasEnPunto(lat, lon, { estricto: true });
+    if (cs.length && (!estado.comuna || estado.comuna.cod !== cs[0].cod)) elegirComuna(cs[0], { volar: false });
+    if (movil()) fijarHoja("cerrada");
+    pintarEstado(`<span class="ok">●</span> <b>${esc(nombreLugar(r).nombre)}</b>${cs.length ? ` · ${esc(cs[0].nombre)}` : ""}`);
+    if (esPunto && r.addresstype !== "road") {
+      mapa.flyTo([lat, lon], 18, { duration: 1.8 });
+      if (cs.length) mapa.once("moveend", () => consultar(lat, lon, { candidatas: cs }));
+    } else if (isFinite(s) && isFinite(n)) {
+      mapa.flyToBounds([[s, w], [n, e]], { ...paddingVista(), duration: 1.8, maxZoom: esPunto ? 18 : 16 });
+    } else mapa.flyTo([lat, lon], 15, { duration: 1.8 });
+  }
+  $("#formLugar").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const q = $("#lugarBuscado").value.trim(); if (q.length < 2) return;
+    $("#lugarBuscado").blur();
+    pintarEstado(`Buscando <b>${esc(q)}</b>…`);
+    try {
+      const url = `${NOMINATIM}?${new URLSearchParams({ q, countrycodes: "cl", format: "jsonv2", limit: "8", "accept-language": "es" })}`;
+      const r = await fetch(url, { headers: { Accept: "application/json" } });
+      if (!r.ok) throw new Error("http");
+      lugares = (await r.json()).filter((x) => x.lat && x.lon);
+    } catch {
+      cerrarLugares();
+      return pintarEstado(`<span class="mal">●</span> El buscador de lugares no respondió; intenta de nuevo`);
+    }
+    if (!lugares.length) { cerrarLugares(); return pintarEstado(`<span class="mal">●</span> No encontré <b>${esc(q)}</b> en Chile`); }
+    if (lugares.length === 1) return irALugar(lugares[0]);
+    pintarEstado("");
+    resLugar.innerHTML = `
+      <div class="res-cab">${lugares.length} lugares para “${esc(q)}”<button type="button" class="res-cerrar" aria-label="Cerrar resultados">×</button></div>
+      <ul>${lugares.map((x, i) => {
+        const { nombre, resto } = nombreLugar(x);
+        const tipo = TIPOS_LUGAR[x.addresstype] || TIPOS_LUGAR[x.type] || TIPOS_LUGAR[x.category] || "";
+        return `<li><button type="button" data-l="${i}"><b>${esc(nombre)}</b><span>${tipo ? `${esc(tipo)} · ` : ""}${esc(resto)}</span></button></li>`;
+      }).join("")}</ul>
+      <p class="res-nota">Búsqueda: © colaboradores de OpenStreetMap</p>`;
+    resLugar.hidden = false;
+    if (movil()) fijarHoja("media");
+  });
+  resLugar.addEventListener("click", (e) => {
+    if (e.target.closest(".res-cerrar")) return cerrarLugares();
+    const b = e.target.closest("[data-l]"); if (b && lugares[+b.dataset.l]) irALugar(lugares[+b.dataset.l]);
+  });
+
+  // ── Panel lateral (escritorio) ──────────────────────────
+  function plegarPanel(si) {
+    document.body.classList.toggle("panel-oculto", si);
+    $("#abrirPanel").hidden = !si;
+    try { localStorage.setItem("predial-panel", si ? "oculto" : ""); } catch {}
+  }
+  $("#plegarPanel").addEventListener("click", () => plegarPanel(true));
+  $("#abrirPanel").addEventListener("click", () => plegarPanel(false));
+
+  // ── Hoja deslizable (celular) ───────────────────────────
+  const ESTADOS_HOJA = ["cerrada", "media", "abierta"];
+  function fijarHoja(e) {
+    ESTADOS_HOJA.forEach((x) => document.body.classList.toggle(`hoja-${x}`, x === e));
+    $("#consola").style.maxHeight = "";
+  }
+  (() => {
+    const asa = $("#asa"), consola = $("#consola");
+    let y0 = null, h0 = 0, movido = false;
+    asa.addEventListener("pointerdown", (e) => {
+      if (!movil()) return;
+      y0 = e.clientY; h0 = consola.getBoundingClientRect().height; movido = false;
+      asa.setPointerCapture(e.pointerId); consola.classList.add("arrastrando");
+    });
+    asa.addEventListener("pointermove", (e) => {
+      if (y0 === null) return;
+      const dy = e.clientY - y0; if (Math.abs(dy) > 4) movido = true;
+      consola.style.maxHeight = `${Math.max(96, Math.min(innerHeight * 0.9, h0 - dy))}px`;
+    });
+    const soltar = () => {
+      if (y0 === null) return;
+      consola.classList.remove("arrastrando");
+      const actual = ESTADOS_HOJA.find((x) => clase(`hoja-${x}`)) || "media";
+      if (!movido) fijarHoja(actual === "cerrada" ? "media" : "cerrada");
+      else {
+        const h = consola.getBoundingClientRect().height / innerHeight;
+        fijarHoja(h < 0.3 ? "cerrada" : h < 0.66 ? "media" : "abierta");
+      }
+      y0 = null;
+    };
+    asa.addEventListener("pointerup", soltar);
+    asa.addEventListener("pointercancel", soltar);
+  })();
+  fijarHoja("media");
+
+  // ── Control del mapa: mi ubicación ──────────────────────
+  const ICONO_UBIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3"/></svg>`;
+  let puntoYo = null;
+  const ControlUbicacion = L.Control.extend({
+    options: { position: "bottomright" },
+    onAdd() {
+      const d = L.DomUtil.create("div", "leaflet-bar control-extra");
+      d.innerHTML = `<a href="#" role="button" id="btnUbicacion" title="Mi ubicación" aria-label="Ir a mi ubicación">${ICONO_UBIC}</a>`;
+      L.DomEvent.disableClickPropagation(d);
+      return d;
+    },
+  });
+  new ControlUbicacion().addTo(mapa);
+  $("#btnUbicacion").addEventListener("click", (e) => {
+    e.preventDefault();
+    const b = e.currentTarget;
+    if (!navigator.geolocation) return pintarEstado(`<span class="mal">●</span> Este navegador no permite obtener tu ubicación`);
+    b.classList.add("cargando");
+    navigator.geolocation.getCurrentPosition((pos) => {
+      b.classList.remove("cargando");
+      const { latitude: lat, longitude: lon, accuracy } = pos.coords;
+      if (puntoYo) mapa.removeLayer(puntoYo);
+      puntoYo = L.layerGroup([
+        L.circle([lat, lon], { radius: Math.min(accuracy, 300), color: "#e8e6df", weight: 1, opacity: 0.5, fillOpacity: 0.06, interactive: false }),
+        L.circleMarker([lat, lon], { radius: 6, color: "#0a0c0b", weight: 2, fillColor: "#e8e6df", fillOpacity: 1, interactive: false }),
+      ]).addTo(mapa);
+      if (!comunasEnPunto(lat, lon, { estricto: true }).length) {
+        mapa.flyTo([lat, lon], 11, { duration: 1.4 });
+        return pintarEstado(`<span class="mal">●</span> Tu ubicación no cae en una comuna con cartografía del SII`);
+      }
+      if (movil()) fijarHoja("cerrada");
+      mapa.flyTo([lat, lon], 18, { duration: 1.6 });
+      mapa.once("moveend", () => consultar(lat, lon));
+    }, () => {
+      b.classList.remove("cargando");
+      pintarEstado(`<span class="mal">●</span> No se pudo obtener tu ubicación (revisa el permiso del navegador)`);
+    }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 });
+  });
+
+  try { if (!movil() && localStorage.getItem("predial-panel") === "oculto") plegarPanel(true); } catch {}
+  encuadreInicial(false);
 
   // ── Arranque ────────────────────────────────────────────
   Promise.all([fetch("data/comunas.json").then((r) => r.json()), fetch("data/comunas.geojson").then((r) => r.json())])

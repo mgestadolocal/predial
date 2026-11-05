@@ -16,24 +16,40 @@
 <body class="inicio">
 
 <div id="mapa" aria-label="Mapa de predios"></div>
-<div class="barrido" aria-hidden="true"></div>
 <div class="reticula" aria-hidden="true"></div>
 
 <!-- Consola principal -->
 <aside class="consola" id="consola">
+  <button class="asa" id="asa" type="button" aria-label="Subir o bajar el panel"><i></i></button>
   <header class="marca">
     <span class="logo" aria-hidden="true">
       <svg viewBox="0 0 32 32"><path d="M6 26V6h12l8 8v12z"/><circle cx="16" cy="17" r="2.5"/></svg>
     </span>
     <span class="nombre">PREDIAL</span>
     <span class="version">CL / SII · en vivo</span>
+    <button class="plegar" id="plegarPanel" type="button" title="Ocultar panel" aria-label="Ocultar panel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
   </header>
+
+  <form class="busqueda" id="formLugar" role="search" autocomplete="off">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+    <input id="lugarBuscado" type="search" enterkeyhint="search" spellcheck="false" placeholder="Buscar lugar o dirección · ej. Curanipe" aria-label="Buscar lugar o dirección">
+    <button type="submit" aria-label="Buscar">→</button>
+  </form>
+  <div class="resultados" id="resultadosLugar" hidden></div>
 
   <div class="intro">
     <h1>Chile,<br><em>predio a predio.</em></h1>
     <p>Elige una región y una comuna, acércate y toca cualquier lote para ver su rol, avalúo y destino según el Servicio de Impuestos Internos.</p>
   </div>
 
+  <div class="lugar-resumen" id="lugarResumen" hidden>
+    <span class="lr-ruta"></span>
+    <button class="enlace" id="cambiarLugar" type="button">Cambiar</button>
+  </div>
+
+  <div class="lugar" id="lugar">
   <div class="paso">
     <label class="rotulo" for="region"><span>01</span> Región</label>
     <div class="regiones" id="regiones" role="listbox" aria-label="Regiones"></div>
@@ -45,6 +61,8 @@
       <input id="comuna" type="text" autocomplete="off" spellcheck="false" placeholder="Escribe o elige…" disabled>
       <ul class="sugerencias" id="sugerencias" role="listbox" hidden></ul>
     </div>
+  </div>
+
   </div>
 
   <div class="paso" id="pasoRol">
@@ -89,11 +107,21 @@
   </footer>
 </aside>
 
+<button class="abrir-panel" id="abrirPanel" type="button" hidden aria-label="Mostrar panel">
+  <span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 26V6h12l8 8v12z"/><circle cx="16" cy="17" r="2.5"/></svg></span>
+  <span>Predial</span>
+  <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+</button>
+
 <!-- Ficha del predio -->
 <section class="ficha" id="ficha" aria-live="polite" hidden>
-  <button class="cerrar" id="cerrarFicha" aria-label="Cerrar ficha">×</button>
+  <div class="ficha-botones">
+    <button class="cerrar" id="minimizarFicha" type="button" title="Minimizar ficha" aria-label="Minimizar ficha">–</button>
+    <button class="cerrar" id="cerrarFicha" type="button" title="Cerrar ficha" aria-label="Cerrar ficha">×</button>
+  </div>
   <div id="fichaCuerpo"></div>
 </section>
+<button class="ficha-pill" id="fichaPill" type="button" hidden></button>
 
 <!-- Instrumentos -->
 <div class="instrumentos">
@@ -105,6 +133,9 @@
   <div class="capas" role="group" aria-label="Fondo del mapa">
     <button data-fondo="noche" class="activo">Noche</button>
     <button data-fondo="satelite">Satélite</button>
+    <label class="intensidad" title="Intensidad de los deslindes">Líneas
+      <input id="intensidad" type="range" min="0.15" max="1.6" step="0.05" value="1" aria-label="Intensidad de los deslindes">
+    </label>
     <button data-rotulos id="btnRotulos" title="Mostrar números de rol del SII">N° rol</button>
   </div>
 </div>
