@@ -422,6 +422,7 @@
       </div>
       ${dl(filas)}
       ${filasAh.length ? `<div class="seccion">Área homogénea</div>${dl(filasAh)}` : ""}
+      ${!IPT || conNormativa(c.cod) ? `<div id="normativaSec"><div class="seccion">Normativa urbana</div><div id="normativa" class="norma-carga">Buscando la zona del Plan Regulador…</div></div>` : ""}
       <div class="tgr sii">
         <h3>Más antecedentes en el SII</h3>
         <p>El detalle de cada construcción (material, calidad, año y superficie) y el tipo de exención no se publican en el mapa del SII. Están en el <b>certificado de avalúo fiscal detallado</b>, que pide la clave tributaria del propietario. La <b>consulta de avalúos y contribuciones</b> es pública, pero tiene captcha.</p>
@@ -461,6 +462,278 @@
         ...filas.map(([k, v]) => `${k}: ${v}`), location.href].filter(Boolean).join("\n");
       copiar(txt, e.currentTarget, "Copiado ✓");
     });
+    pintarNormativa(c, +plat, +plon, supTerr);
+  }
+
+  // ── Normativa urbana (piloto: Maipú y Providencia) ──────
+  // Zonificación del Plan Regulador publicada por cada municipio y normas de cada zona
+  // transcritas de su ordenanza (ver tools/normativa/). Es referencial: la norma de un
+  // predio la certifica la DOM en el Certificado de Informaciones Previas (CIP).
+  const NORMATIVA = new Set([14109, 15103]);
+  const cacheNormativa = new Map();
+  function cargarNormativa(cod) {
+    if (!cacheNormativa.has(cod)) {
+      cacheNormativa.set(cod, fetch(`data/normativa/${cod}.json`).then((r) => { if (!r.ok) throw new Error(); return r.json(); })
+        .catch((e) => { cacheNormativa.delete(cod); throw e; }));
+    }
+    return cacheNormativa.get(cod);
+  }
+  function enCapa(fc, lat, lon) {
+    const pt = [lon, lat];
+    return (fc ? fc.features : []).filter((f) => {
+      const g = f.geometry; if (!g) return false;
+      const polis = g.type === "Polygon" ? [g.coordinates] : g.type === "MultiPolygon" ? g.coordinates : [];
+      return polis.some((p) => dentro(pt, p[0]) && !p.slice(1).some((h) => dentro(pt, h)));
+    });
+  }
+  const codZona = (z) => z.replace(/^([A-Z]+)(\d)/, "$1-$2");
+  const decimal = (s) => { const m = String(s || "").match(/^(\d+(?:,\d+)?)/); return m ? +m[1].replace(",", ".") : null; };
+
+  // Catálogo nacional: capas del servicio IPT del MINVU (publicado por la SMA) por comuna.
+  // Se consulta en vivo con el punto del predio (el servidor permite CORS).
+  let IPT = null;
+  const iptListo = fetch("data/normativa/ipt.json").then((r) => r.json()).then((d) => (IPT = d)).catch(() => null);
+  const conNormativa = (cod) => NORMATIVA.has(cod) || !!(IPT && IPT.comunas[cod]) || !!STD[cod];
+  const txt = (s) => String(s ?? "").replace(/\u0081/g, "").replace(/\s+/g, " ").trim();
+  const attr = (a, ...ks) => { for (const k of ks) { const v = txt(a[k]); if (v && v !== "0" && v !== "--") return v; } return ""; };
+  async function consultarIPT(ids, lat, lon) {
+    const q = new URLSearchParams({ geometry: `${lon},${lat}`, geometryType: "esriGeometryPoint", inSR: 4326,
+      spatialRel: "esriSpatialRelIntersects", outFields: "*", returnGeometry: false, f: "json" });
+    const res = await Promise.all(ids.map(async (id) => {
+      try {
+        // el servidor de la SMA a veces no responde: no se espera más de 8 s
+        const j = await (await fetch(`${IPT.servicio}/${id}/query?${q}`, { signal: AbortSignal.timeout(8000) })).json();
+        return (j.features || []).map((f) => ({ id, capa: IPT.capas[id] || "", a: f.attributes }));
+      } catch { return []; }
+    }));
+    return res.flat();
+  }
+
+  async function pintarNormativa(c, lat, lon, supTerr) {
+    const cont = $("#normativa"); if (!cont) return;
+    await iptListo;
+    const ipt = IPT && IPT.comunas[c.cod];
+    if (!NORMATIVA.has(c.cod) && !ipt && !(await stdIndice)[c.cod]) { $("#normativaSec")?.remove(); return; }
+    const [d, rIPT, std] = await Promise.all([
+      NORMATIVA.has(c.cod) ? cargarNormativa(c.cod).catch(() => null) : null,
+      ipt ? consultarIPT([...ipt.prc, ...(ipt.metro || [])], lat, lon) : [],
+      cargarStd(c.cod),
+    ]);
+    if (!document.body.contains(cont)) return;  // la ficha cambió mientras cargaba
+    cont.className = "norma";
+    const metro = new Set((ipt && ipt.metro) || []);
+    const esAfect = (f) => metro.has(f.id) || /Riesgo|Restricci|Resguardo/i.test(f.capa);
+    const sinDato = (f) => /^(PRC Actual|S\/I|)$/i.test(attr(f.a, "ZONA", "ZONA_1", "SIGLA")) && /sin informaci|^$/i.test(attr(f.a, "UPREF", "NOMBRE", "NOM"));
+    const zonasIPT = rIPT.filter((f) => !esAfect(f) && !sinDato(f)), afectIPT = rIPT.filter(esAfect);
+    const local = d ? enCapa(d.capas.zonas, lat, lon) : [];
+    let html = "";
+    if (d && d.edificacion && local.length) html = bloquesLocales(d, local, supTerr, c);   // detalle completo (Maipú)
+    else {
+      // IPT del MINVU (en Providencia su zona trae también la edificación: "UR/EA7" = aislada hasta 7 pisos)
+      html = zonasIPT.map((f) => {
+        // condiciones de edificación leídas de la ordenanza (OCR), si hay para esta zona
+        const z = std && !/Seccional|Secciona /i.test(f.capa) ? std.zonas[claveZona(attr(f.a, "ZONA", "ZONA_1", "SIGLA"))] : null;
+        return bloqueIPT(f, !local.length) + (z ? condicionesStd(z, supTerr, std) : "");
+      }).join("");
+      if (local.length) html += bloquesLocales(d, local, supTerr, c, { sinCabecera: zonasIPT.length > 0 });
+    }
+    // comuna sin mapa de zonas en el IPT, pero con la ordenanza leída: el usuario elige la zona
+    if (std && !ipt && !local.length) html = `<p class="norma-nota">No hay mapa digital de zonas para esta comuna. Elige la zona del predio según el plano del Plan Regulador:</p>
+      <label class="std-elegir">Zona <select><option value="">—</option>${Object.keys(std.zonas).sort((a, b) => a.localeCompare(b, "es", { numeric: true }))
+        .map((k) => `<option value="${esc(k)}">${esc(std.zonas[k].codigo)}</option>`).join("")}</select></label><div class="std-elegida"></div>`;
+    if (!html) html = `<p class="norma-nota">El punto del predio no cae en una zona del Plan Regulador: puede ser vialidad, espacio público o un área fuera del límite urbano.</p>`;
+    cont.innerHTML = html + afectaciones(d, lat, lon, afectIPT) + pieNormativa(d, rIPT.length > 0 || (ipt && !d));
+    const enlazar = (raiz) => raiz.querySelectorAll(".cond-bloque").forEach((b) => {
+      const n = b.dataset.std ? std.zonas[b.dataset.zona] : d.normas[b.dataset.zona];
+      pintarCondiciones(b, n);
+      b.addEventListener("click", (e) => { const t = e.target.closest("[data-col]"); if (t && t !== b) { b.dataset.col = t.dataset.col; pintarCondiciones(b, n); } });
+      b.querySelector(".calc input").addEventListener("input", () => pintarCondiciones(b, n));
+    });
+    enlazar(cont);
+    cont.querySelector(".std-elegir select")?.addEventListener("change", (e) => {
+      const caja = cont.querySelector(".std-elegida"), z = std.zonas[e.target.value];
+      caja.innerHTML = z ? condicionesStd(z, supTerr, std) : "";
+      enlazar(caja);
+    });
+  }
+
+  // Normas estandarizadas desde las ordenanzas del Diario Oficial (tools/normativa/ocr_normas.py + estandarizar.py)
+  const claveZona = (z) => String(z || "").replace(/[\s-]/g, "").toUpperCase();
+  let STD = {};
+  const stdIndice = fetch("data/normativa/std/index.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})).then((i) => (STD = i));
+  const cacheStd = new Map();
+  async function cargarStd(cod) {
+    if (!(await stdIndice)[cod]) return null;
+    if (!cacheStd.has(cod)) cacheStd.set(cod, fetch(`data/normativa/std/${cod}.json`).then((r) => r.json()).catch(() => null));
+    return cacheStd.get(cod);
+  }
+  function condicionesStd(z, supTerr, std) {
+    return condiciones(claveZona(z.codigo), z, supTerr).replace('class="cond-bloque"', 'class="cond-bloque" data-std="1"')
+      + `<p class="norma-nota">Fuente: ${esc(z.fuente)}${z.pagina ? `, pág. ${z.pagina} del PDF` : ""}. ${esc(std.nota)}</p>`;
+  }
+
+  // Condiciones de edificación: una pestaña por destino (vivienda, equipamiento…) y una
+  // calculadora con la superficie del terreno (la del SII si viene; si no, la escribe el usuario).
+  function condiciones(z, n, supTerr) {
+    return `<div class="cond-bloque" data-zona="${esc(z)}" data-col="0">
+      ${n.cols.length > 1 ? `<div class="segmento cond-tabs" role="tablist">${n.cols.map((c, i) =>
+        `<button type="button" data-col="${i}" class="${i ? "" : "activo"}">${esc(c)}</button>`).join("")}</div>` : ""}
+      <div class="calc">
+        <label>Terreno <input type="number" inputmode="decimal" min="0" step="1" value="${supTerr ? Math.round(supTerr) : ""}" placeholder="m²" aria-label="Superficie del terreno en m²"> m²</label>
+        <div class="calc-res"></div>
+      </div>
+      <dl class="tabla cond-tabla"></dl>
+      ${n.nota ? `<p class="norma-nota">${esc(n.nota)}</p>` : ""}
+    </div>`;
+  }
+  function pintarCondiciones(bloque, n) {
+    const i = +bloque.dataset.col, valor = (et) => { const f = n.filas.find((x) => x[0].startsWith(et)); return f ? f[2][i] : null; };
+    bloque.querySelectorAll(".cond-tabs button").forEach((b) => b.classList.toggle("activo", +b.dataset.col === i));
+    bloque.querySelector(".cond-tabla").innerHTML = n.filas.map(([et, un, vs]) =>
+      `<dt>${esc(et)}</dt><dd>${esc(vs[i])}${un && /^\d/.test(vs[i]) && !/\D{3,}/.test(vs[i]) ? ` ${esc(un)}` : ""}</dd>`).join("");
+    const sup = +bloque.querySelector(".calc input").value || 0;
+    const cc = decimal(valor("Constructibilidad")), cos = decimal(valor("Ocupación de suelo")), alt = valor("Altura");
+    const res = bloque.querySelector(".calc-res");
+    if (!sup || cc == null) { res.innerHTML = `<span class="calc-ayuda">Escribe la superficie del terreno para calcular cuánto se puede construir.</span>`; return; }
+    res.innerHTML = `
+      <div><small>Construible máx.</small><b>${num.format(Math.round(cc * sup))} m²</b><i>${String(cc).replace(".", ",")} × ${num.format(sup)}</i></div>
+      ${cos != null ? `<div><small>Huella en 1er piso</small><b>${num.format(Math.round(cos * sup))} m²</b><i>${String(cos).replace(".", ",")} × ${num.format(sup)}</i></div>` : ""}
+      ${alt ? `<div><small>Altura</small><b>${esc(alt)}</b></div>` : ""}`;
+  }
+  function listaUsos(usos) {
+    const si = usos.filter((u) => u.si).length;
+    return `<details class="usos"><summary>Usos de suelo <span>${si} permitidos · ${usos.length - si} prohibidos</span></summary>
+      <ul>${usos.map((u) => `<li class="${u.si ? "si" : "no"}"><b>${esc(u.clase)}</b>${u.cond ? `<span>${esc(u.cond)}</span>` : ""}</li>`).join("")}</ul></details>`;
+  }
+  function listaUsosProv(usos) {
+    const estadoUso = (u) => (u.perm && !u.proh ? "si" : !u.perm && u.proh ? "no" : "parcial");
+    const cuenta = usos.reduce((a, u) => (a[estadoUso(u)]++, a), { si: 0, no: 0, parcial: 0 });
+    return `<details class="usos"><summary>Usos de suelo <span>${cuenta.si} permitidos · ${cuenta.parcial} con restricciones · ${cuenta.no} prohibidos</span></summary>
+      <ul>${usos.map((u) => `<li class="${estadoUso(u)}"><b>${esc(u.uso)}</b>
+        ${u.perm ? `<span><em>Permitido:</em> ${esc(u.perm)}</span>` : ""}${u.proh ? `<span><em>Prohibido:</em> ${esc(u.proh)}</span>` : ""}</li>`).join("")}</ul></details>`;
+  }
+  // Zonas de la capa municipal con sus normas transcritas de la ordenanza
+  function bloquesLocales(d, zonas, supTerr, c, { sinCabecera = false } = {}) {
+    const vistas = new Set();
+    return zonas.filter((f) => !vistas.has(f.properties.z) && vistas.add(f.properties.z)).map((f) => {
+      const z = f.properties.z, n = d.normas[z] || {};
+      return `
+        ${sinCabecera ? "" : `<div class="norma-cab">
+          <span class="zona-cod" style="--zc:${colorZona(c.cod, z)}">${esc(codZona(z))}</span>
+          <div><b>${esc(f.properties.n || n.nombre || "Zona del Plan Regulador")}</b>
+          <small>${esc(f.properties.n && n.nombre ? n.nombre + " · " : "")}${esc(d.instrumento)}</small></div>
+        </div>`}
+        ${f.properties.m ? `<p class="norma-nota">Zona modificada por ${esc(f.properties.m)}.</p>` : ""}
+        ${n.filas ? condiciones(z, n, supTerr) : ""}
+        ${n.usosTexto ? `<p class="norma-texto">${esc(n.usosTexto)}</p>` : ""}
+        ${n.usos ? listaUsos(n.usos) : ""}
+        ${n.usosProv ? listaUsosProv(n.usosProv) : ""}
+        ${n.pdf ? `<div class="acciones norma-acc"><a class="boton" href="${esc(n.pdf)}" target="_blank" rel="noopener">${n.usosProv ? "Cuadro de usos (PDF)" : "Ordenanza de la zona (PDF)"} ↗</a></div>` : ""}`;
+    }).join("");
+  }
+  // Zona según el IPT del MINVU (nombre, usos preferente / permitidos / prohibidos y decreto)
+  function bloqueIPT(f, conUsos) {
+    const a = f.a, zona = attr(a, "ZONA", "ZONA_1", "SIGLA"), nombre = attr(a, "NOMBRE", "NOM", "NOMBRE_1");
+    const titulo = zona && nombre.startsWith(zona) ? nombre.slice(zona.length).trim() : nombre;
+    const doc = [attr(a, "T_DO", "T_DOC"), attr(a, "N_DOC") ? `N° ${attr(a, "N_DOC")}` : "", attr(a, "P_DO")].filter(Boolean).join(" ");
+    const pref = attr(a, "UPREF"), perm = attr(a, "UPERM"), proh = attr(a, "UPROH");
+    return `
+      <div class="norma-cab">
+        <span class="zona-cod" style="--zc:${colorUso(pref, zona)}">${esc(zona || "—")}</span>
+        <div><b>${esc(titulo || "Zona del Plan Regulador")}</b>
+        <small>${esc(/Seccional|Secciona /i.test(f.capa) ? f.capa : "Plan Regulador Comunal")}${doc ? ` · ${esc(doc)}` : ""}</small></div>
+      </div>
+      ${conUsos && (pref || perm || proh) ? `<div class="usos-ipt">
+        ${pref ? `<div><small>Uso preferente</small><span>${esc(pref)}</span></div>` : ""}
+        ${perm ? `<div class="si"><small>Permitidos</small><span>${esc(perm)}</span></div>` : ""}
+        ${proh ? `<div class="no"><small>Prohibidos</small><span>${esc(proh)}</span></div>` : ""}
+      </div>` : ""}`;
+    // El campo URL del IPT apunta a observatoriourbano.cl, dominio que hoy redirige a un sitio de casinos: no se enlaza.
+  }
+  function afectaciones(d, lat, lon, ipt = []) {
+    const out = [];
+    if (d) {
+      enCapa(d.capas.riesgo, lat, lon).forEach((f) => out.push(["Área de riesgo " + f.properties.t, (d.riesgos || {})[f.properties.t] || ""]));
+      enCapa(d.capas.prms, lat, lon).forEach((f) => out.push(["PRMS-100 · " + f.properties.z, [f.properties.u, f.properties.n].filter(Boolean).join(" · ")]));
+      enCapa(d.capas.zt, lat, lon).forEach((f) => out.push(["Zona Típica · " + f.properties.n, "Monumento Nacional (Ley 17.288): las obras requieren autorización del Consejo de Monumentos Nacionales."]));
+      enCapa(d.capas.zch, lat, lon).forEach((f) => out.push(["Zona de Conservación Histórica · " + f.properties.n, "Las obras se rigen por normas especiales del PRC; demoler o modificar requiere autorización de la SEREMI MINVU."]));
+    }
+    ipt.forEach(({ capa, a }) => {
+      const origen = /^Santiago/.test(capa) ? "PRMS" : /^Concepción/.test(capa) ? "PRM Concepción" : capa;
+      const zona = attr(a, "ZONA", "SIGLA"), nom = attr(a, "NOMBRE", "NOM");
+      const norma = attr(a, "NORMA").split(";")[0];
+      out.push([`${origen} · ${zona || nom}`, [zona ? nom : "", attr(a, "UPREF"), norma.length > 90 ? norma.slice(0, 88) + "…" : norma].filter(Boolean).join(" · ")]);
+    });
+    if (!out.length) return "";
+    return `<div class="afect">${out.map(([t, x]) => `<div><b>${esc(t)}</b>${x ? `<span>${esc(x)}</span>` : ""}</div>`).join("")}</div>`;
+  }
+  function pieNormativa(d, conIPT) {
+    const fuentes = [d ? d.fuente : "", conIPT ? "IPT del MINVU (servicio de la SMA), que puede no incluir modificaciones recientes" : ""].filter(Boolean).join("; ")
+      || "la ordenanza del Plan Regulador publicada en el Diario Oficial";
+    return `<p class="norma-aviso">Referencial, según ${esc(fuentes)}. No reemplaza el <b>Certificado de Informaciones Previas</b> que emite la Dirección de Obras.${d && d.visor ? ` <a href="${esc(d.visor)}" target="_blank" rel="noopener">Visor municipal ↗</a>` : ""}</p>`;
+  }
+  function colorUso(pref, zona) {
+    if (/verde|parque/i.test(pref)) return "#6fcf97";
+    if (/productiv|industri/i.test(pref)) return "#b48ef0";
+    if (/equipamiento/i.test(pref)) return "#56ccf2";
+    if (/riesgo|restric/i.test(pref)) return "#eb5757";
+    return zona ? colorZona(0, zona) : "#f2c94c";
+  }
+
+  // Colores por familia de zona (también en la capa PRC del mapa)
+  function colorZona(cod, z) {
+    if (/^(ZE8|ZE3|ZE4|ZE9|ZE11|AVC|PqI)/.test(z)) return "#6fcf97";           // áreas verdes y parques
+    if (/^(ZCH|ICH|ZE1$|ZUSP)/.test(z)) return "#f2a6c8";                      // patrimonio
+    if (/^AR/.test(z)) return "#eb5757";                                       // restricción
+    if (/^(ZI|UpAP)/.test(z)) return "#b48ef0";                                // industrial / productivo
+    if (/^(ZC|UpEC)/.test(z)) return "#ff8a4c";                                // centros y comercio
+    if (/^(ZE|ZIM|ZEMoI)/.test(z)) return "#56ccf2";                           // equipamiento especial
+    return "#f2c94c";                                                          // habitacional
+  }
+  // Imagen del servicio IPT (export de ArcGIS) pedida como teselas de 256 px
+  const CapaIPT = L.TileLayer.extend({
+    getTileUrl(t) {
+      const ts = this.getTileSize(), nw = t.scaleBy(ts), se = nw.add(ts), m = this._map;
+      const a = L.CRS.EPSG3857.project(m.unproject(nw, t.z)), b = L.CRS.EPSG3857.project(m.unproject(se, t.z));
+      return `${IPT.servicio}/export?${new URLSearchParams({ bbox: [a.x, b.y, b.x, a.y].join(), bboxSR: 3857, imageSR: 3857,
+        size: `${ts.x},${ts.y}`, layers: `show:${this.options.ids}`, transparent: true, format: "png32", f: "image" })}`;
+    },
+  });
+  function comunasPRCVisibles() {
+    const v = mapa.getBounds();
+    return estado.comunas.filter((c) => conNormativa(c.cod) && c.bbox && v.intersects([[c.bbox[1], c.bbox[0]], [c.bbox[3], c.bbox[2]]]))
+      .slice(0, 12).map((c) => c.cod);
+  }
+  let capaPRC = null;
+  async function mostrarPRC(si) {
+    if (capaPRC) { mapa.removeLayer(capaPRC); capaPRC = null; }
+    $("#btnPRC").classList.toggle("activo", si);
+    document.body.classList.remove("con-prc");
+    if (!si) return;
+    await iptListo;
+    const visibles = mapa.getZoom() >= 11 ? comunasPRCVisibles() : [];
+    if (!visibles.length) {
+      aviso.textContent = mapa.getZoom() < 11 ? "Acércate a una comuna para ver su Plan Regulador" : "Esta zona no tiene Plan Regulador en el catálogo"; aviso.hidden = false;
+      setTimeout(actualizarAviso, 3200);
+      $("#btnPRC").classList.remove("activo"); document.body.classList.remove("con-prc");
+      return;
+    }
+    const grupo = L.layerGroup(); grupo.cods = visibles.join(); capaPRC = grupo;
+    const cods = visibles.filter((cod) => NORMATIVA.has(cod));
+    document.body.classList.toggle("con-prc", cods.length > 0);  // la leyenda es la de las capas municipales
+    const ids = visibles.filter((cod) => !NORMATIVA.has(cod)).flatMap((cod) => IPT.comunas[cod].prc);
+    if (ids.length) new CapaIPT("", { ids: [...new Set(ids)].join(), opacity: 0.4, minZoom: 11, maxZoom: 20, zIndex: 5,
+      className: "capa-ipt", attribution: "PRC: IPT MINVU / SMA" }).addTo(grupo);
+    grupo.addTo(mapa);
+    for (const cod of cods) {
+      let d; try { d = await cargarNormativa(cod); } catch { continue; }
+      if (capaPRC !== grupo) return;
+      L.geoJSON(d.capas.zonas, { interactive: false, style: (f) => {
+        const col = colorZona(cod, f.properties.z);
+        return { color: col, weight: 1, opacity: 0.8, fillColor: col, fillOpacity: 0.22 };
+      } }).addTo(grupo);
+      if (d.lineas) L.geoJSON(d.lineas, { interactive: false, style: { color: "#ff5b1f", weight: 2, opacity: 0.85, dashArray: "6 4" } }).addTo(grupo);
+    }
   }
 
   // ── Oferta en Portal Inmobiliario ───────────────────────
@@ -623,6 +896,14 @@
   try { const v = localStorage.getItem("predial-lineas"); if (v) intensidad.value = v; } catch {}
   fijarIntensidad(intensidad.value);
   intensidad.addEventListener("input", () => fijarIntensidad(intensidad.value));
+
+  $("#btnPRC").addEventListener("click", () => mostrarPRC(!capaPRC));
+  // Con la capa PRC activa, al llegar a otra comuna con normativa se vuelve a armar.
+  mapa.on("moveend", () => {
+    if (!capaPRC) return;
+    const visibles = mapa.getZoom() >= 11 ? comunasPRCVisibles().join() : "";
+    if (visibles && visibles !== capaPRC.cods) mostrarPRC(true);
+  });
 
   $("#btnRotulos").addEventListener("click", (e) => {
     estado.rotulos = !estado.rotulos;

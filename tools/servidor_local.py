@@ -16,10 +16,18 @@ S = requests.Session(); S.headers.update(H)
 def sii(ep, data):
     p = {"data": data, "metaData": {"namespace": "cl.sii.sdi.lob.bbrr.mapas.data.api.interfaces.MapasFacadeService/" + ep,
          "conversationId": "UNAUTHENTICATED-CALL", "transactionId": f"web-{int(time.time()*1000)}"}}
-    r = S.post(SII + ep, json=p, timeout=20)
-    try: txt = r.content.decode("utf-8")
-    except UnicodeDecodeError: txt = r.content.decode("cp1252")
-    return json.loads(txt).get("data") if r.ok else None
+    # igual que el Worker: el SII a veces da 504 tras ~10 s -> cortar a los 7 s, reintentar, y si no, error (502)
+    for _ in range(3):
+        try:
+            r = S.post(SII + ep, json=p, timeout=7)
+        except requests.RequestException:
+            continue
+        if r.ok:
+            try: txt = r.content.decode("utf-8")
+            except UnicodeDecodeError: txt = r.content.decode("cp1252")
+            return (json.loads(txt) or {}).get("data")
+        time.sleep(0.4)
+    raise RuntimeError("sii")
 
 class H_(SimpleHTTPRequestHandler):
     def __init__(self, *a, **k): super().__init__(*a, directory=str(WEB), **k)
@@ -28,6 +36,11 @@ class H_(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "application/json"); self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(b))); self.end_headers(); self.wfile.write(b)
     def do_GET(self):
+        try:
+            return self.rutas()
+        except RuntimeError:
+            return self.responder({"error": "el SII no respondió"}, 502)
+    def rutas(self):
         u = urlparse(self.path); q = {k: v[0] for k, v in parse_qs(u.query).items()}
         if u.path == "/predio":
             if not re.fullmatch(r"sii:BR_CART_[A-Z0-9_]+_WMS", q.get("layer", "")): return self.responder({"error": "layer"}, 400)

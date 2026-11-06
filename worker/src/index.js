@@ -46,9 +46,16 @@ async function sii(endpoint, data) {
       transactionId: `web-${Date.now()}`,
     },
   };
-  for (let intento = 0; intento < 2; intento++) {
-    const r = await fetch(SII + endpoint, { method: "POST", headers: SII_HEADERS, body: JSON.stringify(body) });
+  // El SII a veces responde 504 tras ~10 s: se corta a los 7 s y se reintenta. Si nunca contesta bien,
+  // se lanza error (502 sin caché) para no confundir una caída del SII con "no hay predio aquí".
+  let respondio = false;
+  for (let intento = 0; intento < 3; intento++) {
+    let r;
+    try {
+      r = await fetch(SII + endpoint, { method: "POST", headers: SII_HEADERS, body: JSON.stringify(body), signal: AbortSignal.timeout(7000) });
+    } catch { continue; }
     if (r.ok) {
+      respondio = true;
       // El SII mezcla UTF-8 y Latin-1 según el servicio: decodificar con respaldo para no romper tildes y "m²".
       const bytes = await r.arrayBuffer();
       let texto;
@@ -57,8 +64,9 @@ async function sii(endpoint, data) {
       const j = JSON.parse(texto);
       if (j && j.data) return j.data;
     }
-    await new Promise((res) => setTimeout(res, 600));
+    await new Promise((res) => setTimeout(res, 400));
   }
+  if (!respondio) throw new Error("sii");
   return null;
 }
 
