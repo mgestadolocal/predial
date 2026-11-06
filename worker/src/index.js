@@ -1,7 +1,8 @@
 // Intermediario mínimo entre la web y el visor de mapas del SII.
 // El SII no envía cabeceras CORS, así que el navegador no puede leer su API directamente.
 // Solo expone tres consultas de lectura (predio por punto, por rol y por dirección) con validación estricta;
-// no es un proxy abierto.
+// no es un proxy abierto. En /mcp expone las mismas consultas como servidor MCP para asistentes de IA (con clave).
+import { manejarMcp } from "./mcp.js";
 
 const SII = "https://www4.sii.cl/mapasui/services/data/mapasFacadeService/";
 const NS = "cl.sii.sdi.lob.bbrr.mapas.data.api.interfaces.MapasFacadeService/";
@@ -139,6 +140,9 @@ async function prediosPorDireccion(p) {
 export default {
   async fetch(req, env, ctx) {
     const url = new URL(req.url);
+    if (url.pathname.replace(/\/+$/, "") === "/mcp") {
+      return manejarMcp(req, env, { punto: predioPorPunto, rol: predioPorRol, direccion: prediosPorDireccion });
+    }
     const h = cors(req.headers.get("Origin") || "", env);
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: h });
     if (req.method !== "GET") return json({ error: "método no permitido" }, 405, h);

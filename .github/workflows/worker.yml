@@ -29,3 +29,8 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: worker
           command: deploy --var ALLOWED_ORIGINS:${{ vars.ALLOWED_ORIGINS || '*' }}
+          # clave del servidor MCP (/mcp); sin ella el MCP rechaza todas las consultas
+          secrets: |
+            MCP_KEY
+        env:
+          MCP_KEY: ${{ secrets.MCP_KEY }}
